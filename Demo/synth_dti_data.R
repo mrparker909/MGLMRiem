@@ -26,7 +26,7 @@ Y = array(0, dim=c(3,3, sizeR(X,2))) #zeros(3,3,size(X,2));
 for(i in 1:sizeR(X,2)) {
   Vtmp = array(0, dim=c(3,3,1))  #zeros(3,3,1)
   for(j in 1:npivots) {
-    Vtmp = Vtmp + V[,,j]%*%X[j,i]
+    Vtmp = Vtmp + aug3(V[,,j]*X[j,i])
   }
   Y[,,i] = expmap_spd(Yp[,,1],Vtmp)
 }
@@ -36,7 +36,7 @@ notspd = 0
 for(i in 1:sizeR(Y,3)) {
   notspd = notspd + (!isspd(Y[,,i]))
 }
-if(notspd !=0) stop("generated Y is not an spd!")
+if(notspd > 0) stop("generated Y is not an spd!")
 #
 Xsample = NULL
 Ysample = array(0, dim=c(3,3, sizeR(Y,3)*npairs)) #zeros(3,3,size(Y,3)*npairs);
@@ -44,7 +44,7 @@ isample = 1
 for(i in 1:npairs) {
   for(j in 1:size(Y,3)) {
     Ysample[,,isample] = addnoise_spd(Y[,,j],noise)
-    isample = isample + 1;
+    isample = isample + 1
   }
   Xsample =[Xsample X];
 }
