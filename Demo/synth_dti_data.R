@@ -38,16 +38,16 @@ for(i in 1:sizeR(Y,3)) {
 }
 if(notspd !=0) stop("generated Y is not an spd!")
 #
-Xsample = [];
-Ysample = zeros(3,3,size(Y,3)*npairs);
-isample = 1;
-for i = 1:npairs
-for j = 1:size(Y,3)
-Ysample(:,:,isample) = addnoise_spd(Y(:,:,j),noise);
-isample = isample + 1;
-end
-Xsample =[Xsample X];
-end
+Xsample = NULL
+Ysample = array(0, dim=c(3,3, sizeR(Y,3)*npairs)) #zeros(3,3,size(Y,3)*npairs);
+isample = 1
+for(i in 1:npairs) {
+  for(j in 1:size(Y,3)) {
+    Ysample[,,isample] = addnoise_spd(Y[,,j],noise)
+    isample = isample + 1;
+  }
+  Xsample =[Xsample X];
+}
 assert(isspd_mxstack(Ysample) == 1)
 X = Xsample;
 Y = Ysample;
