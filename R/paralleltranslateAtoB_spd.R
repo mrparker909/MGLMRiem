@@ -65,6 +65,7 @@
 # end
 
 # repmat function, repeats a matrix X n times, to make an array that has dimension dim(A) by n
+#' @export
 repmat = function(X,n) {
   array(X, dim = c(dim(X),n))  
 }
@@ -79,6 +80,7 @@ parallel <- function(p,q,w) {
   return(w_new)
 }
 
+#' @export
 paralleltranslateAtoB_spd <- function(a, b, w) {
 # PARALLELTRANSLATEATOB_SPD transports a set of tangent vectors w from TaM to TbM.
 #

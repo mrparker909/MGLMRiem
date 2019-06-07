@@ -23,6 +23,7 @@
 #   end
 #   
 
+#' @export
 prediction_spd <- function(p,V,X) {
 #PREDICTION_SPD predicts phat based on estimate p, V and covariate X.
 #

@@ -17,6 +17,7 @@
 #   gsr = gsr + dist_M_spd(X(:,:,idata),X_hat(:,:,idata))^2;
 #   end
 
+#' @export
 gsqerr_spd <- function(X, X_hat) {
 # GSQERR_SPD returns the sum of geodesic squared error on SPD manifolds.
 #

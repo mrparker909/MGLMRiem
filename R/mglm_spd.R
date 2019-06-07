@@ -2,6 +2,7 @@
 # Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352
 # Credit goes to the paper authors, blame for errors in code goes to Matthew RP Parker 2019
 
+#' @export
 mglm_spd <- function(X, Y, maxiter=500) {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
 #

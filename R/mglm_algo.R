@@ -3,6 +3,7 @@
 # Credit goes to the paper authors, blame for errors in code goes to Matthew RP Parker 2019
 
 # returns size of each dimension d, returns 1 if d is NA
+#' @export
 sizeR <- function(M, d=NULL) {
   if(is.null(d)) {
     d = dim(M)
@@ -14,6 +15,7 @@ sizeR <- function(M, d=NULL) {
 }
 
 # augment a n x m matrix to a n x m x 1 array
+#' @export
 aug3 <- function(M) {
   if(sizeR(M,3)==1) {
     M <- array(M, dim=c(dim(M), 1))  

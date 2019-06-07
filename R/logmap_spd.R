@@ -29,6 +29,7 @@
 # %v = rtX*logm(invrtX*Y*invrtX)*rtX;
 # % v = (v+v')/2;
 
+#' @export
 logmap_spd <- function(P,X) {
 #LOGMAP_SPD maps X on SPD manifold to the tangent space at P.
 #
@@ -46,12 +47,12 @@ logmap_spd <- function(P,X) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $  
 
    
-  if(max(svd(P-X)$d) < 1e-18) { return(array(0, dim=sizeR(P))) }
+  if(max(svd(P-X)$d) < 1e-18) { return(array(0, dim=dim(P))) }
 
   EIG <- eigen(P)
   U <- EIG$vectors
-  D <- EIG$values
-
+  D <- diag(EIG$values)
+  
   g = U%*%sqrt(D)
   invg = solve(g)
   y = invg%*%X%*%t(invg)
@@ -61,7 +62,7 @@ logmap_spd <- function(P,X) {
   S <- EIG$values
 
   H = g%*%V
-  v = H%*%log(diag(S))%*%t(H)
+  v = H%*%diag(log(S))%*%t(H)
 
 #rtX = sqrtm(X);
 #invrtX = inv(rtX);

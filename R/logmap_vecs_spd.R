@@ -27,6 +27,7 @@
 # end
 # 
 
+#' @export
 logmap_vecs_spd <- function(X,Y){
 #LOGMAP_VECS_SPD returns logmap(X,Y) for SPD manifolds.
 #

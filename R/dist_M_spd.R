@@ -12,6 +12,7 @@
 # d = sqrt(innerprod_TpM_spd(V,V,X));
 # end
 
+#' @export
 dist_M_spd <- function(X,Y) {
 #DIST_M_SPD returns distance between X and Y on SPD manifold.
 #
@@ -26,8 +27,8 @@ dist_M_spd <- function(X,Y) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $  
 
    
-  V = logmap_spd(X,Y);
-  d = sqrt(innerprod_TpM_spd(V,V,X));
-
+  V = logmap_spd(X,Y)
+  d = sqrt(innerprod_TpM_spd(V,V,X))
+  
   return(d)
 }

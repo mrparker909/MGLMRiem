@@ -44,6 +44,7 @@
 #   end
 #   end
 
+#' @export
 proj_M_spd <- function(X,c=.Machine$double.eps) {
 # PROJ_M_SPD projects a matrix onto SPD manifolds.
 #

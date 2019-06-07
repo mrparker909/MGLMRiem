@@ -15,6 +15,7 @@
 # w = repmat(w, [size(mx,1) size(mx,2) 1]);
 # S = sum(mx.*w,3);
 
+#' @export
 weightedsum_mx <- function(mx, w) {
   # WEIGHTEDSUM_MX sums matrices with weight w.
   #

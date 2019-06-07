@@ -18,6 +18,7 @@
 # r = trace(sqrtinvP*U*invP*V*sqrtinvP);
 # end
 
+#' @export
 innerprod_TpM_spd <- function(U,V,P) {
 #INNERPROD_TPM_SPD calculates the inner product of U and V in T_{P}M on SPD manifolds.
 #
@@ -37,7 +38,7 @@ innerprod_TpM_spd <- function(U,V,P) {
     MASS::ginv(P)
   })
   
-  sqrtinvP= expm::sqrtm(invP)
+  sqrtinvP = expm::sqrtm(invP)
   r = sum(diag(sqrtinvP%*%U%*%invP%*%V%*%sqrtinvP))
 
   return(r)

@@ -33,6 +33,7 @@
 #     T = (sum(S) == size(mx,3));
 # end
 
+#' @export
 isspd <- function(mx,c=.Machine$double.eps) {
   #ISSPD check mx is a symmetric positive definite matrix.
   #    This check whether the smallest eigen value is bigger than c.
@@ -59,7 +60,8 @@ isspd <- function(mx,c=.Machine$double.eps) {
   }
   return(T)
 }
-    
+
+#' @export    
 issym <- function(mx) {
   tol = 0.00001;
   S = array(0, dim=c(sizeR(mx,3), 1)) #zeros(size(mx,3),1);

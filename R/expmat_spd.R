@@ -28,6 +28,7 @@
 # %    exp_p_v = rtP*expm(invrtP*V*invrtP)*rtP;
 # end
 
+#' @export
 expmap_spd <- function(P,X) {
 #EXPMAP_SPD maps tangent vector X onto SPD manifold.
 #

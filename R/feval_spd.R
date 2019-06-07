@@ -20,6 +20,7 @@
 #   P_hat = prediction_spd(p,V,X);
 # E = gsqerr_spd(Y, P_hat);
 
+#' @export
 feval_spd <- function(p,V,X,Y) {
 # FEVAL_SPD evaluates the objective function value (the sum of squared geodesic errors) of MGLM on SPD. 
 #

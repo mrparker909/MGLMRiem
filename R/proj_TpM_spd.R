@@ -11,6 +11,7 @@
 #     end
 # end
 
+#' @export
 proj_TpM_spd <- function(V) {
   # PROJ_TPM_SPD projects a set of tangent V vectors onto TpM. Symmetrization.
   #
