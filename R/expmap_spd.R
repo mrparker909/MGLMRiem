@@ -51,16 +51,16 @@ expmap_spd <- function(P,X) {
   U <- EIG$vectors
   D <- diag(EIG$values)
 
-  g <- U*sqrt(D)
+  g <- U%*%sqrt(D)
   invg = solve(g)
-  Y = invg%*%X%*%t(invg)
+  Y = invg%*%cont3(X)%*%t(invg)
   
   EIG <- eigen(Y)
   V <- EIG$vectors
-  S <- diag(EIG$values)
+  S <- EIG$values
 
   gv = g%*%V
-  exp_p_x = gv%*%exp(diag(S))%*%t(gv)
+  exp_p_x = gv%*%diag(exp(S))%*%t(gv)
 
 #    rtP = sqrtm(P);
 #    invrtP = inv(rtP);

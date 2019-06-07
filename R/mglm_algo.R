@@ -14,11 +14,21 @@ sizeR <- function(M, d=NULL) {
   return(dims)
 }
 
-# augment a n x m matrix to a n x m x 1 array
+# augment a n x m matrix to a n x m x 1 array, inverse of cont3
 #' @export
 aug3 <- function(M) {
   if(sizeR(M,3)==1) {
     M <- array(M, dim=c(dim(M), 1))  
   }
   return(M)
+}
+
+# contract an n x m x 1 array to an n x m matrix, inverse of aug3
+#' @export
+cont3 <- function(M) {
+  if(!is.na(dim(M)[3])) {
+    return(array(M, dim = dim(M)[1:2]))
+  } else {
+    return(M)
+  }
 }

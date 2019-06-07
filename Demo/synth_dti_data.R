@@ -28,7 +28,7 @@ for(i in 1:sizeR(X,2)) {
   for(j in 1:npivots) {
     Vtmp = Vtmp + aug3(V[,,j]*X[j,i])
   }
-  Y[,,i] = expmap_spd(Yp[,,1],Vtmp)
+  Y[,,i] = expmap_spd(P=Yp[,,1],X=Vtmp)
 }
 
 # Sanity check
