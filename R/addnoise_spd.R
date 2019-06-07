@@ -8,6 +8,14 @@
 # function M = randsym(n)
 # M = randn(n);
 # M = (M+M')/2;
+
+#' @export
+randsym <- function(n) {
+  M = matrix(rnorm(n*n), ncol=n) #randn(n)
+  M = (M+t(M))/2
+  return(M)
+}  
+
 #' @export
 addnoise_spd <- function(A, maxerr) {
   V = randsym(sizeR(A,1))
@@ -18,8 +26,3 @@ addnoise_spd <- function(A, maxerr) {
   return(Anew)
 }
 
-randsym <- function(n) {
-  M = matrix(rnorm(n*n), ncol=n) #randn(n)
-  M = (M+t(M))/2
-  return(M)
-}  
