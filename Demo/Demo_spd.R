@@ -5,8 +5,9 @@ print('Start.')
 for(i in 1:10) {
   seed = trunc(runif(n = 1, min = 1, 1000))
   
-  synth_dti_data
+  source("./Demo/synth_dti_data.R")
   
+  # continue converting to R from here:
   Ybar = karcher_mean_spd(Y,[],500);
   [p, V, E, Yhat, gnorm] = mglm_spd(X,Y);
   r2_iterative  = r2stat_spd(Ybar, Y, Yhat);

@@ -54,11 +54,11 @@ isspd <- function(mx,c=.Machine$double.eps) {
   # Check matrices are symmetric positive definite.
   mx <- aug3(mx)
   
-  T = array(0, dim=c(sizeR(mx,3),1)) #zeros(size(mx,3),1);
+  t = array(0, dim=c(sizeR(mx,3),1)) #zeros(size(mx,3),1);
   for(i in 1:sizeR(mx,3)) {
-    T[i] = (sum(eigen(mx[,,i])$values <= 0+c ) ==0) && issym(mx[,,i]);
+    t[i] = (sum(eigen(mx[,,i])$values <= 0+c ) ==0) && issym(mx[,,i]);
   }
-  return(T)
+  return(as.numeric(t))
 }
 
 #' @export    
