@@ -6,7 +6,8 @@
 #' @export
 sizeR <- function(M, d=NULL) {
   if(is.null(d)) {
-    d = dim(M)
+    d = dim(M)[1:length(dim(M))]
+    return(d)
   }
   
   dims <- dim(M)[d]

@@ -48,6 +48,6 @@ for(i in 1:npairs) {
   }
   Xsample = cbind(Xsample, X) #[Xsample X];
 }
-assert(isspd_mxstack(Ysample) == 1)
-X = Xsample;
-Y = Ysample;
+if(isspd_mxstack(Ysample) != 1) { stop("spd stack contains non-spd matrix") }
+X = Xsample
+Y = Ysample

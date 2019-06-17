@@ -47,8 +47,8 @@ prediction_spd <- function(p,V,X) {
   Yhat = array(0, dim=c(dp[1],dp[2],ndata))
   
   for(i in 1:ndata) {
-    Vi <- array(0,dim=dp);
-    Vi <- aug3(Vi)
+    Vi <- as.matrix(array(0,dim=dp))
+    #Vi <- aug3(Vi)
     for(j in 1:ndimX) {
       Vi <- Vi+V[,,j]*X[j,i]
     }

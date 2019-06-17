@@ -70,12 +70,17 @@ repmat = function(X,n) {
   array(X, dim = c(dim(X),n))  
 }
   
+# repmat function, repeats a matrix X n times, tiled along the columns dimension of X
+#' @export
+repmat2 = function(X,n) {
+  array(rep(X,times=n), dim = c(dim(X)[1], dim(X)[2]*n, dim(X)[-c(1,2)]))  
+}
 
 parallel <- function(p,q,w) {
   rtp = expm::sqrtm(p) #sqrtm(p);
   invrtp = solve(rtp)  #inv(rtp);
   v = logmap_spd(p,q)
-  r = expm::expm(invrtp%*%v/2%*%invrtp)
+  r = expm::expm(invrtp%*%(v/2)%*%invrtp)
   w_new = rtp%*%r%*%invrtp%*%w%*%invrtp%*%r%*%rtp
   return(w_new)
 }
@@ -135,7 +140,7 @@ paralleltranslateAtoB_spd <- function(a, b, w) {
 #       T12 = P12\invP1*P2;
 #       B = P1\w(:,:,i);
 #       w_new(:,:,i) = P2*T12'*B*T12;
-    w_new[,,i] = parallel(P1,P2,w[,,i])
+    w_new[,,i] = parallel(p=P1,q=P2,w=w[,,i])
   }
   
 # symmetrization.
