@@ -103,7 +103,7 @@ paralleltranslateAtoB_spd <- function(a, b, w) {
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/07 $ 
    a <- aug3(a)
-   b <- aug3(b)
+   #b <- aug3(b)
    w <- aug3(w)
    
   if(sizeR(a,3) < sizeR(b,3)) {
@@ -130,6 +130,9 @@ paralleltranslateAtoB_spd <- function(a, b, w) {
       P2 = b[,,i]
     }
 
+    P1 <- drop(P1)
+    P2 <- drop(P2)
+    
     if(max(svd(P1-P2)$d) < 1e-20) { # norm(P1-P2) < 1e-20 {
       w_new[,,i] = w[,,i]
       next

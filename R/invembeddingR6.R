@@ -51,11 +51,11 @@ invembeddingR6 <- function(p, v) {
   
   #   step 1
   w = t(c(1,  sqrt(2), sqrt(2), 1, sqrt(2), 1))
-  S = vec2symmx(v/w)
+  S = vec2symmx(v = v/w)
   
   #   step 2    
   sqrtp= expm::sqrtm(p)
-  vnew = sqrtp%*%S%*%sqrtp
+  vnew = sqrtp%*%drop(S)%*%sqrtp
   
   return(vnew)
 }

@@ -39,9 +39,10 @@ symmx2vec <- function(mx) {
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/17 $ 
-
-  nr <- dim(mx)[1]
-  nc <- dim(mx)[2]
+  if(is.na(dim(mx)[3])) { mx <- aug3(mx) }
+  
+  nr    <- dim(mx)[1]
+  nc    <- dim(mx)[2]
   ndata <- dim(mx)[3]
   
   v = array(0, dim=c(nr*(nr+1)/2,ndata))

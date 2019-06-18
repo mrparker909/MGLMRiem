@@ -52,12 +52,10 @@ embeddingR6 <- function(p, v) {
 #   $Revision: 0.2 $  $Date: 2019/06/17 $ 
 
   #    step 1
-  tryCatch({
-    invp = inv(p)  
-  },
-  error={
-    invp = pinv(p) # Numerical problem
-    print('pinv')
+  invp = tryCatch({
+    solve(p)
+  }, error = function(e) {
+    MASS::ginv(p)
   })
   
   sqrtinvp= expm::sqrtm(invp)
@@ -65,8 +63,8 @@ embeddingR6 <- function(p, v) {
   S = sqrtinvp%*%v%*%sqrtinvp
   #    step 3
   #    v = [Sxx Sxy Sxz Syy Syz Szz]'
-  v = symmx2vec(S)
-  w = t(c(1, sqrt(2), sqrt(2), 1, sqrt(2), 1))
+  v = symmx2vec(mx = S)
+  w = c(1, sqrt(2), sqrt(2), 1, sqrt(2), 1)
   vnew = w*v
 
   return(vnew)

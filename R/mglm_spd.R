@@ -60,7 +60,7 @@ mglm_spd <- function(X, Y, maxiter=500) {
   for(niter in 1:maxiter) {
     Y_hat = prediction_spd(p,V,X)
     J = logmap_vecs_spd(Y_hat, Y)        
-    err_TpM = paralleltranslateAtoB_spd(Y_hat, p, J)
+    err_TpM = paralleltranslateAtoB_spd(a = Y_hat, b = p, w = J)
     gradp = -1*apply(err_TpM, c(1,2), sum)#-sum(err_TpM,3);
 
     # v projection on to tanget space
@@ -97,7 +97,7 @@ mglm_spd <- function(X, Y, maxiter=500) {
       if(!isspd(p_new)) {
         p_new = proj_M_spd(p_new)
       }
-      V_new = paralleltranslateAtoB_spd(p,p_new,V_new)
+      V_new = paralleltranslateAtoB_spd(a = p,b = p_new,w = V_new)
       E_new = feval_spd(p_new, V_new, X, Y)
 
       if(E[length(E)] > E_new) {
@@ -125,14 +125,17 @@ mglm_spd <- function(X, Y, maxiter=500) {
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]
-  return(list(p=p, V=V, E=E, Y_hat=Y_hat, gnorm=gnorm))
+  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm))
 }
 
 # NormVs
 normVs <- function(p,V) {
+  V=aug3(V)
+  ns <- matrix(0, nrow=sizeR(V,3), ncol=1)
   for(i in 1:sizeR(V,3)) {
-    ns[i,1] = norm_TpM_spd(p,V[,,i])
+    ns[i,1] = norm_TpM_spd(p=p,v=V[,,i])
   }
+  return(ns)
 }
 
 # Safeguard

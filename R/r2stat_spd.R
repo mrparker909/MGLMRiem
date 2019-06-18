@@ -36,7 +36,7 @@ r2stat_spd <- function(Y_bar, Y, Y_hat) {
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/17 $ 
 
-  gvar = gsqerr_spd(repmat(Y_bar,c(1,1,sizeR(Y,3))), Y)
+  gvar = gsqerr_spd(repmat(Y_bar,sizeR(Y,3)), Y)
   uvar = gsqerr_spd(Y, Y_hat)
   r2 = 1-uvar/gvar
   return(r2)

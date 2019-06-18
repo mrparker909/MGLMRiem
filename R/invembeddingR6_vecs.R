@@ -30,6 +30,7 @@
 #     error('V is wrong input');
 # end
 
+#' @export
 invembeddingR6_vecs <- function(p, V) {
 #INVEMBEDDINGR6_VECS is the inverse of EMBEDDINGR6_VECS. This brings V in R6 to in TpM.
 #This transports V from T_{I}M to TpM.
@@ -58,7 +59,7 @@ invembeddingR6_vecs <- function(p, V) {
       nmx = sizeR(V, 2)
       Vnew = array(0, dim=c(3,3, nmx))
       for(i in 1:nmx) {
-        Vnew[,,i] = invembeddingR6(p, V[,i])
+        Vnew[,,i] = invembeddingR6(p, v = V[,i])
       }
     } else {
       stop('V is wrong input')

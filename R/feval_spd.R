@@ -24,7 +24,7 @@
 feval_spd <- function(p,V,X,Y) {
 # FEVAL_SPD evaluates the objective function value (the sum of squared geodesic errors) of MGLM on SPD. 
 #
-#    E = FEVAL_SPD(p,V, X, Y)
+#    E = FEVAL_SPD(p, V, X, Y)
 #
 #   !! make sure that X is centered if p, V are calculated by centered X !!
 #
@@ -44,6 +44,6 @@ feval_spd <- function(p,V,X,Y) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $  
 
   P_hat <- prediction_spd(p,V,X)
-  E     <- gsqerr_spd(Y, P_hat)
+  E     <- gsqerr_spd(X = Y, X_hat = P_hat)
   return(E)
 }

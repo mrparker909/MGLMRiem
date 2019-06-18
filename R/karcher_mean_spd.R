@@ -71,7 +71,7 @@ karcher_mean_spd <- function(X, W=NULL, niter) {
       }
     }
   } else {
-    W = W/pracma::Norm(W,1)
+    W = W/norm(W,"1")
     for(iter in 1:niter) {
       tmp = logmap_pt2array_spd(xbar,X)
       wtmp = array(0, sizeR(tmp))
@@ -80,7 +80,7 @@ karcher_mean_spd <- function(X, W=NULL, niter) {
       }
       phi = sum(wtmp,3)
       xbar = expmap_spd(xbar, phi)
-      if(pracma::Norm(phi) < 1e-18) {
+      if(norm(phi,"2") < 1e-18) {
         break
       }
     }

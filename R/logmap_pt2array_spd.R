@@ -58,7 +58,7 @@ logmap_pt2array_spd <- function(p,X) {
   V = array(0,sizeR(X))
   # For each data
   for(i in 1:sizeR(X,3)) {
-    if(max(svd(p-X[,,i])$d) < 1e-18) {
+    if(norm(p-X[,,i],"2") < 1e-18) {
       V[,,i] = array(0,sizeR(p))
       next()
     }

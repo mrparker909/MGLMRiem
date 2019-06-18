@@ -23,6 +23,7 @@
 #   error('V is wrong input.');
 # end
 
+#' @export
 embeddingR6_vecs <- function(p,V) {
 #EMBEDDINGR6_VECS embeds a set of tangnet vectors V in TpM onto R6. This transports V from TpM to T_{I}M.
 #
@@ -44,7 +45,7 @@ embeddingR6_vecs <- function(p,V) {
     nmx = sizeR(V,3)
     Vnew = array(0, dim=c(6,nmx))
     for(i in 1:nmx) {
-      Vnew[,i] = embeddingR6(p, V[,,i])
+      Vnew[,i] = embeddingR6(p, v = V[,,i])
     }
   } else {
     stop('V is wrong input.')

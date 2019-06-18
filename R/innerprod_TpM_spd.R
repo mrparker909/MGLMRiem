@@ -31,6 +31,9 @@ innerprod_TpM_spd <- function(U,V,P) {
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/06 $ 
+  #print(U)
+  #print(V)
+  #print(P)
   
   invP = tryCatch({
     solve(P)
@@ -39,6 +42,7 @@ innerprod_TpM_spd <- function(U,V,P) {
   })
   
   sqrtinvP = expm::sqrtm(invP)
+  
   r = sum(diag(sqrtinvP%*%U%*%invP%*%V%*%sqrtinvP))
 
   return(r)

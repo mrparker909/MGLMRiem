@@ -47,7 +47,7 @@ logmap_spd <- function(P,X) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $  
 
    
-  if(max(svd(P-X)$d) < 1e-18) { return(array(0, dim=dim(P))) }
+  if(norm(P-X,"2") < 1e-18) { return(array(0, dim=dim(P))) }
 
   EIG <- eigen(P)
   U <- EIG$vectors

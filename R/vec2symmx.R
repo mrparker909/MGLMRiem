@@ -26,6 +26,7 @@
 #   end
 #   end
 
+#' @export
 vec2symmx <- function(v) {
 #VEC2SYMMX converts vectors v to matrices mx.
 #
@@ -41,22 +42,25 @@ vec2symmx <- function(v) {
   
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/17 $ 
-
+  v <- t(v)
   if(is.null(dim(v))) {
     v <- t(t(v))
   }
   
-  dimv <- nrow(v)
-  ndata <- ncol(v)
+  sR    <- sizeR(v)
+  dimv  <- sR[1]
+  ndata <- sR[2]
   
   n = (-1 + sqrt(1+8*dimv))/2
   mx = array(0, dim=c(n,n,ndata))
   k = 1
   for(i in 1:n) {
     for(j in i:n) {
-      mx[i,j,] = v[k,]
-      if(i !=j) {
-        mx[j,i,] = v[k,]
+      for(g in 1:ndata) {
+        mx[i,j,g] = v[k,g]
+        if(i !=j) {
+          mx[j,i,g] = v[k,g]
+        }
       }
       k = k + 1
     }

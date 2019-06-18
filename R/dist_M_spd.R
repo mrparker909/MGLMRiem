@@ -28,7 +28,7 @@ dist_M_spd <- function(X,Y) {
 
    
   V = logmap_spd(X,Y)
-  d = sqrt(innerprod_TpM_spd(V,V,X))
+  d = sqrt(innerprod_TpM_spd(U = V,V = V,P = X))
   
   return(d)
 }

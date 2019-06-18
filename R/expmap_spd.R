@@ -44,8 +44,12 @@ expmap_spd <- function(P,X) {
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/06 $ 
-
-  if(max(svd(X)$d) < 1e-18) return(P)
+  if(!isspd(P)) {stop("P is not SPD, expmap_spd")}
+  X <- drop(X)
+  if(!issym(X)) {stop("X is not symmetric, expmap_spd")}
+  
+  
+  if(norm(X, "2") < 1e-18) return(P)
 
   EIG <- eigen(P)
   U <- EIG$vectors
@@ -53,7 +57,7 @@ expmap_spd <- function(P,X) {
 
   g <- U%*%sqrt(D)
   invg = solve(g)
-  Y = invg%*%cont3(X)%*%t(invg)
+  Y = invg%*%X%*%t(invg)
   
   EIG <- eigen(Y)
   V <- EIG$vectors

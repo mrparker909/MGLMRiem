@@ -118,33 +118,35 @@ mglm_logeuc_spd <- function(X, Y, p=NULL, logY=NULL, Yv=NULL, niter=100) {
   }
   
   if(is.null(logY)) {
-    logY = logmap_vecs_spd(p, Y)
+    logY = logmap_vecs_spd(X = p, Y = Y)
   } 
   # xx xy xz yy yz zz
   # Center X.
-  Xc = X - repmat2(apply(X, c(1,3), mean),ndata)
+  Xc = X - repmat2(t(t(apply(X, 1, mean))),ndata)
   # Embedding in R6
   if(is.null(Yv)) {
-    Yv = embeddingR6_vecs(p,logY)
+    Yv = embeddingR6_vecs(p = p,V = logY)
   }
-  L = Yv/Xc # Perform MGLM
+  L = pracma::mrdivide(Yv, Xc) # Yv/Xc # Perform MGLM
   logYv_hat = L%*%Xc # Prediction.
   
   # Transport Y^{\wr} back to TpM
-  V_hat = invembeddingR6_vecs(p,logYv_hat)
+  V_hat = invembeddingR6_vecs(p,V = logYv_hat)
   # Transport V back to TpM
   V = invembeddingR6_vecs(p,L)
   
   Y_hat = array(0, dim=c(ndimY,ndimY,ndata))
   for(i in 1:ndata) {
   #Yhat = expmap(p, Y^{\wr})
-  Y_hat[,,i] = expmap_spd(p,V_hat[,,i])
+    Y_hat[,,i] = expmap_spd(P = p, X = V_hat[,,i])
     if(!isspd(Y_hat[,,i])) {
       print('Numerical error.')
-      Y_hat[,,i] = proj_M_spd(Y_hat[,,i]) # For numerical problem.
+      print(i)
+      Y_hat[,,i] = proj_M_spd(Re(Y_hat[,,i])) #proj_M_spd(Y_hat[,,i]) # For numerical problem.
     }
   }
-  E = gsqerr_spd(Y_hat,Y)
+  
+  E = gsqerr_spd(X = Y_hat,X_hat = Y)
   
   return(list(p=p, V=V, E=E, Y_hat=Y_hat, logY=logY, Yv=Yv))
 }

@@ -43,14 +43,14 @@ logmap_vecs_spd <- function(X,Y){
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/07 $   
-  Y <- aug3(Y)
-  X <- aug3(X)
+  if(is.na(dim(Y)[3])) { Y <- aug3(Y) }
+  if(is.na(dim(X)[3])) { X <- aug3(X) }
   
   V = array(0, dim=sizeR(Y))#zeros(size(Y));
   if(sizeR(X,3)==1) { 
     for(i in 1:sizeR(Y,3)) {
       yi = Y[,,i]
-      V[,,i] = logmap_spd(X,yi)
+      V[,,i] = logmap_spd(drop(X),yi)
     }
   } else {
     for(i in 1:sizeR(X,3)) {
