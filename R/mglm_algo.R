@@ -18,6 +18,7 @@ sizeR <- function(M, d=NULL) {
 # augment a n x m matrix to a n x m x 1 array, inverse of cont3
 #' @export
 aug3 <- function(M) {
+  if(length(dim(M))==3) { return(M) }
   if(sizeR(M,3)==1) {
     M <- array(M, dim=c(dim(M), 1))  
   }

@@ -7,8 +7,8 @@ for(i in 1:10) {
   
   source("./Demo/synth_dti_data.R")
   
-  Ybar = karcher_mean_spd(Y,niter = 500) # niter=500
-  mglm <- mglm_spd(X,Y, maxiter = 500) # maxiter = default (500)
+  Ybar = karcher_mean_spd(Y,niter = 50) # niter=500
+  mglm <- mglm_spd(X,Y, maxiter = 50) # maxiter = default (500)
   p <- mglm$p
   V <- mglm$V
   E <- mglm$E

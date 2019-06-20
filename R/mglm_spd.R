@@ -56,7 +56,7 @@ mglm_spd <- function(X, Y, maxiter=500) {
   gnorm <- NULL #gnorm = [];
   E <- c(E,feval_spd(p,V,X,Y))#E = [E; feval_spd(p,V,X,Y)];
 
-  step = c1;
+  step = c1
   for(niter in 1:maxiter) {
     Y_hat = prediction_spd(p,V,X)
     J = logmap_vecs_spd(Y_hat, Y)        
@@ -71,7 +71,7 @@ mglm_spd <- function(X, Y, maxiter=500) {
       gradV[,,iV] = -weightedsum_mx(err_TpM,X[iV,])
     }
 
-    ns = normVs(p,gradV)
+    ns = normVs(p,V = gradV)
     normgradv = apply(ns,2,sum) #sum(ns)
 
     ns = normVs(p,gradp)
@@ -129,8 +129,9 @@ mglm_spd <- function(X, Y, maxiter=500) {
 }
 
 # NormVs
+#' @export
 normVs <- function(p,V) {
-  V=aug3(V)
+  if(length(dim(V))==2) { V = aug3(V) }
   ns <- matrix(0, nrow=sizeR(V,3), ncol=1)
   for(i in 1:sizeR(V,3)) {
     ns[i,1] = norm_TpM_spd(p=p,v=V[,,i])
@@ -139,6 +140,7 @@ normVs <- function(p,V) {
 }
 
 # Safeguard
+#' @export
 safeguard <- function(gradp, gradV, p, c2) {
   ns = normVs(p,gradV)
   normgradv = apply(ns,2,sum) # sum(ns)

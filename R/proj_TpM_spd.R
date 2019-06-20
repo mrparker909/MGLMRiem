@@ -22,7 +22,7 @@ proj_TpM_spd <- function(V) {
 
   # Migrated to R by Matthew RP Parker
   # $Revision: 0.2 $  $Date: 2019/06/06 $
-  V <- aug3(V)
+  if(length(dim(V))==2) { V <- aug3(V) }
   
   for(i in 1:length(V[1,1,])) {
     V[,,i] <- (V[,,i] + t(V[,,i]))/2

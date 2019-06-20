@@ -77,6 +77,7 @@ repmat2 = function(X,n) {
 }
 
 parallel <- function(p,q,w) {
+  #if(length(dim(p)) > 2) stop(paste0("dim(p)=",dim(p)))
   rtp = expm::sqrtm(p) #sqrtm(p);
   invrtp = solve(rtp)  #inv(rtp);
   v = logmap_spd(p,q)
@@ -127,7 +128,7 @@ paralleltranslateAtoB_spd <- function(a, b, w) {
   for(i in 1:sizeR(w,3)) {
     if(fixab == 0) {
       P1 = a[,,i]
-      P2 = b[,,i]
+      P2 = aug3(b)[,,i]
     }
 
     P1 <- drop(P1)
@@ -135,7 +136,7 @@ paralleltranslateAtoB_spd <- function(a, b, w) {
     
     if(max(svd(P1-P2)$d) < 1e-20) { # norm(P1-P2) < 1e-20 {
       w_new[,,i] = w[,,i]
-      next
+      next()
     }
 
 #       invP1 = inv(P1);
