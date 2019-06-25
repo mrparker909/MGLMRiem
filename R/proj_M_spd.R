@@ -84,7 +84,7 @@ proj_M_spd <- function(X,c=.Machine$double.eps) {
     a = 1e-16 
     pnew = p
     while(!isspd(pnew, c)) {
-      pnew = p + a*diag(rep(1,3))
+      pnew = p + a*diag(rep(1,dim(p)[1]))
       a = 2*a
     }
     p = pnew

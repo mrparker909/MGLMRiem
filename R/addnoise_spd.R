@@ -26,3 +26,13 @@ addnoise_spd <- function(A, maxerr) {
   return(Anew)
 }
 
+#' add noise relative to A where maxerr is percentage error (in relation to A)
+#' @export
+addrelnoise_spd <- function(A, maxerr) {
+  V = randsym(sizeR(A,1))
+  if(norm_TpM_spd(A,V)/(norm_TpM_spd(A,A)*norm_TpM_spd(A,V)) > maxerr) {
+    V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*norm_TpM_spd(A,V))*maxerr
+  }
+  Anew = expmap_spd(A, V)
+  return(Anew)
+}
