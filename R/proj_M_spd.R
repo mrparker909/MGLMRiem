@@ -68,9 +68,9 @@ proj_M_spd <- function(X,c=.Machine$double.eps) {
           X = (X+t(X))/2
   }
   #[V D ] = eig(X);
-  EIG <- eigen(X)
-  V <- EIG$vectors
-  D <- EIG$values
+  EIG <- suppressWarnings(RSpectra::eigs_sym(X,k=dim(X)[1])) # eigen(X)
+  V   <- EIG$vectors
+  D   <- EIG$values
 
   p = array(0, dim=sizeR(X)) #zeros(size(X));
   for(i in 1:length(D)) {

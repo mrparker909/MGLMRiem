@@ -49,17 +49,17 @@ logmap_spd <- function(P,X) {
    
   if(norm(P-X,"2") < 1e-18) { return(array(0, dim=dim(P))) }
 
-  EIG <- eigen(P)
-  U <- EIG$vectors
-  D <- diag(EIG$values)
+  EIG <- suppressWarnings(RSpectra::eigs_sym(P,k=dim(P)[1])) # eigen(P)
+  U   <- EIG$vectors
+  D   <- diag(EIG$values)
   
-  g = U%*%sqrt(D)
+  g    = U%*%sqrt(D)
   invg = solve(g)
-  y = invg%*%X%*%t(invg)
+  y    = invg%*%X%*%t(invg)
   
-  EIG <- eigen(y)
-  V <- EIG$vectors
-  S <- EIG$values
+  EIG <- suppressWarnings(RSpectra::eigs_sym(y,k=dim(y)[1])) # eigen(y)
+  V   <- EIG$vectors
+  S   <- EIG$values
 
   H = g%*%V
   v = H%*%diag(log(S))%*%t(H)
