@@ -78,8 +78,9 @@ repmat2 = function(X,n) {
 
 parallel <- function(p,q,w) {
   #if(length(dim(p)) > 2) stop(paste0("dim(p)=",dim(p)))
-  rtp = expm::sqrtm(p) #sqrtm(p);
-  invrtp = solve(rtp)  #inv(rtp);
+  rtpALL = pracma::sqrtm(p)
+  rtp = rtpALL$B #sqrtm(p);
+  invrtp = rtpALL$Binv  #inv(rtp);
   v = logmap_spd(p,q)
   r = expm::expm(invrtp%*%(v/2)%*%invrtp)
   w_new = rtp%*%r%*%invrtp%*%w%*%invrtp%*%r%*%rtp

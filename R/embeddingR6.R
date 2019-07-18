@@ -52,13 +52,13 @@ embeddingR6 <- function(p, v) {
 #   $Revision: 0.2 $  $Date: 2019/06/17 $ 
 
   #    step 1
-  invp = tryCatch({
-    solve(p)
-  }, error = function(e) {
-    MASS::ginv(p)
-  })
+  # invp = tryCatch({
+  #   solve(p)
+  # }, error = function(e) {
+  #   MASS::ginv(p)
+  # })
   
-  sqrtinvp= expm::sqrtm(invp)
+  sqrtinvp= pracma::sqrtm(invp)$Binv
   #    step 2    
   S = sqrtinvp%*%v%*%sqrtinvp
   #    step 3

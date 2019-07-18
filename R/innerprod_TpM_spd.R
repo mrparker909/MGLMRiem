@@ -35,15 +35,15 @@ innerprod_TpM_spd <- function(U,V,P) {
   #print(V)
   #print(P)
   
-  invP = tryCatch({
-    solve(P)
-  }, error = function(e) {
-    MASS::ginv(P)
-  })
+  # invP = tryCatch({
+  #   solve(P)
+  # }, error = function(e) {
+  #   MASS::ginv(P)
+  # })
   
-  sqrtinvP = expm::sqrtm(invP)
+  sqrtinvP = pracma::sqrtm(P)$Binv
   
-  r = sum(diag(sqrtinvP%*%U%*%invP%*%V%*%sqrtinvP))
+  r = sum(diag(sqrtinvP%*%U%*%sqrtinvP%*%sqrtinvP%*%V%*%sqrtinvP))
 
   return(r)
 }

@@ -54,7 +54,7 @@ invembeddingR6 <- function(p, v) {
   S = vec2symmx(v = v/w)
   
   #   step 2    
-  sqrtp= expm::sqrtm(p)
+  sqrtp= pracma::sqrtm(p)$B
   vnew = sqrtp%*%drop(S)%*%sqrtp
   
   return(vnew)
