@@ -51,7 +51,7 @@ expmap_spd <- function(P,X) {
   
   if(norm(X, "2") < 1e-18) return(P)
 
-  EIG <- suppressWarnings(RSpectra::eigs_sym(P,k=dim(P)[1])) #eigen(P)
+  EIG <- eigen(P, symmetric=T) #eigen(P)
   U <- EIG$vectors
   D <- diag(EIG$values)
 
@@ -59,7 +59,7 @@ expmap_spd <- function(P,X) {
   invg = solve(g)
   Y = invg%*%X%*%t(invg)
   
-  EIG <- suppressWarnings(RSpectra::eigs_sym(Y,k=dim(Y)[1])) #eigen(Y)
+  EIG <- eigen(Y,symmetric=T) #eigen(Y)
   V <- EIG$vectors
   S <- EIG$values
 

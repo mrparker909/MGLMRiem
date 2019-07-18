@@ -48,7 +48,7 @@ logmap_pt2array_spd <- function(p,X) {
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/17 $   
-  EIG <- suppressWarnings(RSpectra::eigs_sym(p,k=dim(p)[1])) #eigen(p)
+  EIG <- eigen(p,symmetric = T) #eigen(p)
   U   <- EIG$vectors
   D   <- diag(EIG$values)
 
@@ -63,7 +63,7 @@ logmap_pt2array_spd <- function(p,X) {
       next()
     }
     y = invg%*%X[,,i]%*%t(invg)
-    EIG <- suppressWarnings(RSpectra::eigs_sym(y,k=dim(y)[1])) #eigen(y)
+    EIG <- eigen(y,symmetric = T) #eigen(y)
     U   <- EIG$vectors
     S   <- diag(EIG$values)
     

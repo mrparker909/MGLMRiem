@@ -56,7 +56,8 @@ isspd <- function(mx,c=.Machine$double.eps) {
   
   t = array(0, dim=c(sizeR(mx,3),1)) #zeros(size(mx,3),1);
   for(i in 1:sizeR(mx,3)) {
-    t[i] = (!any(suppressWarnings(RSpectra::eigs_sym(mx[,,i],k=dim(mx[,,i])[1]))$values <= c )) && issym(mx[,,i])
+    
+    t[i] = (!any(eigen(mx[,,i],symmetric=T)$values <= c )) && issym(mx[,,i])
     #t[i] = (sum(eigen(mx[,,i])$values <= 0+c ) ==0) && issym(mx[,,i])
   }
   return(all(t == T))
