@@ -41,7 +41,7 @@ innerprod_TpM_spd <- function(U,V,P) {
   #   MASS::ginv(P)
   # })
   
-  sqrtinvP = pracma::sqrtm(P)$Binv
+  sqrtinvP = Isqrtm(P)$Binv
   
   r = sum(diag(sqrtinvP%*%U%*%sqrtinvP%*%sqrtinvP%*%V%*%sqrtinvP))
 

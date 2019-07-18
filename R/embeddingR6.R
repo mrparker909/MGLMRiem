@@ -58,7 +58,7 @@ embeddingR6 <- function(p, v) {
   #   MASS::ginv(p)
   # })
   
-  sqrtinvp= pracma::sqrtm(invp)$Binv
+  sqrtinvp= Isqrtm(invp)$Binv
   #    step 2    
   S = sqrtinvp%*%v%*%sqrtinvp
   #    step 3

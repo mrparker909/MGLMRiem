@@ -29,7 +29,7 @@ for(i in 1:k) {
 # generate N Diffusion Tensors (no dependence on confounds C)
 Y <- array(0, dim=c(3,3,N))
 for(i in 1:N) {
-  Y[,,i] <- randspd(n = 3)
+  Y[,,i] <- randspd_FAST(n = 3)
 }
 
 
@@ -37,9 +37,9 @@ for(i in 1:N) {
 npivots = sizeR(C,1) # Number of points except the base point
 Yp = array(0, dim=c(3,3,npivots+1))#zeros(3,3,npivots+1);
 
-Yp[,,1] = randspd(3,2,2) # base point is Yp[,,1]
+Yp[,,1] = randspd_FAST(3,2) # base point is Yp[,,1]
 for(i in 1:(npivots)) {
-  Yp[,,i+1] = randspd(3,3,10)
+  Yp[,,i+1] = randspd_FAST(3,10)
 }
 
 # Tangent vectors, geodesic bases.

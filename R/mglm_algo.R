@@ -34,3 +34,9 @@ cont3 <- function(M) {
     return(M)
   }
 }
+
+# imported functions
+#' @export
+Iexpm  <- expm::expm
+#' @export
+Isqrtm <- pracma::sqrtm

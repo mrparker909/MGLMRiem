@@ -2,7 +2,7 @@ test_that("safeguard works", {
   X = matrix(c(1,2,3,4,5,6,7,8,9,1,2,3,4,5,6)/10, nrow=3)
   Y = array(0, dim=c(3,3,5))
   for(i in 1:5) {
-    Y[,,i] <- randspd(3)
+    Y[,,i] <- randspd_FAST(3)
   }
   
   ndimX = sizeR(X,1) #size(X,1);

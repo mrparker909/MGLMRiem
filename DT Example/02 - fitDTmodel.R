@@ -13,7 +13,7 @@ gnorm <- mglm$gnorm
 
 # expect a low r2, since Y is independent of X
 r2_iterative  = r2stat_spd(Y_bar = Ybar, Y = Y, Y_hat = Yhat)
-# r2 = 0.038
+# r2 = 0.0406
 
 # perform MGLM
 Ybar2 = karcher_mean_spd(Y2,niter = 500) # niter=500
@@ -26,4 +26,4 @@ gnorm2 <- mglm2$gnorm
 
 # expect a high r2, since Y is dependent on X
 r2_iterative2 = r2stat_spd(Y_bar = Ybar2, Y = Y2, Y_hat = Yhat2)
-# r2=0.945
+# r2=0.9973

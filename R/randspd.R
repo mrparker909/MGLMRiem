@@ -1,10 +1,10 @@
 #' @export
 randspd <- function(n, c=3, udist=3) {
-# RANDSPD generates n by b random symmatrix positive matrix P.
+# RANDSPD generates n by n random symmatrix positive matrix P.
 #
 #   P = randspd(n)
 #   P = randspd(n,c)
-#   P = randspd(n,c,udit)
+#   P = randspd(n,c,udist)
 #
 #   c is parameter for variance. Bigger c has bigger variance.
 #   udist is the upper bound of distance from I to P w.r.t. GL-invariant
@@ -27,3 +27,31 @@ randspd <- function(n, c=3, udist=3) {
   }
   return(P)
 }
+
+#' @title randspd_FAST
+#' @description Generate a random Symmetric Positive Definite matrix of dimension n, such that the maximum distance on the manifold is less than maxDist. Makes use of the sparsebnUtils::random.spd function from the library sparsebnUtils.
+#' @param n        dimensions of nxn SPD matrix
+#' @param maxDist  maximum distance of SPD matrix from I_nxn
+#' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
+#' @export
+randspd_FAST <- function(n, maxDist=3, showDist=F) {
+  # 'central point' on spd cone, identity matrix
+  In = diag(rep(1,n))
+
+  # random SPD
+  aDist = runif(1,0,maxDist)
+  P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
+  
+  # control distance from In
+  curDist = dist_M_spd(P,In)
+  while(curDist > maxDist ) {
+    L = logmap_spd(P,In)
+    P = expmap_spd(P,L/10)
+    
+    curDist = dist_M_spd(P,In)
+  }
+  if(showDist) print(curDist)
+  if(!isspd(P)) stop("randsdp_FAST: GENERATED P IS NOT SPD")
+  return(P)
+}
+
