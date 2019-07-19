@@ -31,7 +31,7 @@ randspd <- function(n, c=3, udist=3) {
 #' @title randspd_FAST
 #' @description Generate a random Symmetric Positive Definite matrix of dimension n, such that the maximum distance on the manifold is less than maxDist. Makes use of the sparsebnUtils::random.spd function from the library sparsebnUtils.
 #' @param n        dimensions of nxn SPD matrix
-#' @param maxDist  maximum distance of SPD matrix from I_nxn
+#' @param maxDist  maximum scale of random component P of SPD matrix (projected from I_nxn with expmap(I,m*P), where m in runif(0,maxDist)).
 #' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
 #' @export
 randspd_FAST <- function(n, maxDist=3, showDist=F) {

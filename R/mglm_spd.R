@@ -125,7 +125,7 @@ mglm_spd <- function(X, Y, maxiter=500) {
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]
-  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm))
+  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm, converged=!(niter>=maxiter)))
 }
 
 # NormVs
