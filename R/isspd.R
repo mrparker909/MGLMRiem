@@ -64,7 +64,20 @@ isspd <- function(mx,c=.Machine$double.eps) {
 
 #' @export
 issym <- function(mx) {
-  Rfast::is.symmetric(round(mx, 6))
+  if(require(Rfast)) { return(Rfast::is.symmetric(round(mx, 6))) } else {
+    tol = 0.00001
+    S = array(0, dim=c(sizeR(mx,3), 1)) #zeros(size(mx,3),1);
+
+    # augment third dimension
+    mx <- aug3(mx)
+
+    for(i in 1:sizeR(mx,3)) {
+      S[i] = (sum(apply(abs(mx[,,i]-t(mx[,,i])), 2, sum)) < tol)
+    }
+
+    T = (sum(S) == sizeR(mx,3))
+    return(T)
+  }
 }    
 # issym <- function(mx) {
 #   tol = 0.00001;
