@@ -12,7 +12,8 @@ Imports:
   expm,
   MASS,
   Matrix,
-  pracma
+  pracma,
+  sparsebnUtils
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0)
