@@ -36,3 +36,12 @@ addrelnoise_spd <- function(A, maxerr) {
   Anew = expmap_spd(A, V)
   return(Anew)
 }
+
+#' add noise relative to A where SNR is the signal (A) to noise ratio
+#' @export
+addSNR_spd <- function(A, SNR) {
+  V = randsym(sizeR(A,1))
+  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*(runif(1,0,SNR)))
+  Anew = expmap_spd(A, V)
+  return(Anew)
+}

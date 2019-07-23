@@ -2,6 +2,7 @@
 
 export(Iexpm)
 export(Isqrtm)
+export(addSNR_spd)
 export(addnoise_spd)
 export(addrelnoise_spd)
 export(aug3)
