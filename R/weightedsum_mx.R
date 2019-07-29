@@ -36,7 +36,7 @@ weightedsum_mx <- function(mx, w) {
   if(length(dim(mx))<3) {mx <- aug3(mx)}
   
   message(paste0("weightedsum_mx: dim mx=",dim(mx)))
-  
+  message(paste0("weightedsum_mx: len w =",length(w)))
   if(length(w) != dim(mx)[3]) {
     stop("weightedsum_mx(): length(w) != dim(mx)[3]")
   }
