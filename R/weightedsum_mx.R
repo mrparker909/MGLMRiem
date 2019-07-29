@@ -33,17 +33,11 @@ weightedsum_mx <- function(mx, w) {
   #   $Revision: 0.2 $  $Date: 2019/06/07 $  
   
   #w = reshape(w,[1 1 length(w)]);
-  if(dim(mx)[3]<3) {mx <- aug3(mx)}
+  if(length(dim(mx))<3) {mx <- aug3(mx)}
   
   if(length(w) != dim(mx)[3]) {
     stop("weightedsum_mx(): length(w) != dim(mx)[3]")
   }
-  
-  print("length(w):")
-  print(length(w))
-  
-  print("dim(mx):")
-  print(dim(mx))
   
   for(i in 1:length(w)) {
     mx[,,i] <- w[i] * mx[,,i]

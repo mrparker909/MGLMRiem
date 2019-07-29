@@ -52,7 +52,7 @@ isspd <- function(mx,c=.Machine$double.eps) {
   #   $Revision: 0.2 $  $Date: 2019/06/07 $   
   
   # Check matrices are symmetric positive definite.
-  mx <- aug3(mx)
+  if(length(dim(mx))<3) {mx <- aug3(mx)}
   
   t = array(0, dim=c(sizeR(mx,3),1)) #zeros(size(mx,3),1);
   for(i in 1:sizeR(mx,3)) {
@@ -69,7 +69,7 @@ issym <- function(mx) {
     S = array(0, dim=c(sizeR(mx,3), 1)) #zeros(size(mx,3),1);
 
     # augment third dimension
-    mx <- aug3(mx)
+    if(length(dim(mx))<3) {mx <- aug3(mx)}
 
     for(i in 1:sizeR(mx,3)) {
       S[i] = (sum(apply(abs(mx[,,i]-t(mx[,,i])), 2, sum)) < tol)
