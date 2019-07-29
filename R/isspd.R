@@ -53,7 +53,6 @@ isspd <- function(mx,c=.Machine$double.eps) {
   
   # Check matrices are symmetric positive definite.
   if(length(dim(mx))<3) {mx <- aug3(mx)}
-  message(paste0("isspd: dim mx=",dim(mx)))
   
   t = array(0, dim=c(sizeR(mx,3),1)) #zeros(size(mx,3),1);
   for(i in 1:sizeR(mx,3)) {

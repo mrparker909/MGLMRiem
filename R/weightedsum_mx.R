@@ -35,17 +35,14 @@ weightedsum_mx <- function(mx, w) {
   #w = reshape(w,[1 1 length(w)]);
   if(length(dim(mx))<3) {mx <- aug3(mx)}
   
-  message(paste0("weightedsum_mx: dim mx=",dim(mx)))
-  message(paste0("weightedsum_mx: len w =",length(w)))
   if(length(w) != dim(mx)[3]) {
     stop("weightedsum_mx(): length(w) != dim(mx)[3]")
   }
-  
-  mx2 = array(0, dim=c(dim(mx)))
+
   for(i in 1:length(w)) {
-    mx2[,,i] <- w[i] * mx[,,i]
+    mx[,,i] <- w[i] * mx[,,i]
   }
-  S <- apply(mx2, c(1,2), sum)
+  S <- apply(mx, c(1,2), sum)
   
   #w = repmat(w, [size(mx,1) size(mx,2) 1]);
   #S = sum(mx.*w,3);
