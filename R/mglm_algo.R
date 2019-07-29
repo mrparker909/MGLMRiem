@@ -20,7 +20,7 @@ sizeR <- function(M, d=NULL) {
 aug3 <- function(M) {
   if(length(dim(M))==3) { return(M) }
   if(sizeR(M,3)==1) {
-    M <- array(M, dim=c(dim(M), 1))  
+    M <- array(M, dim=c(dim(M)[1:2], 1))  
   }
   return(M)
 }
