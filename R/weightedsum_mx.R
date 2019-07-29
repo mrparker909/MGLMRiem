@@ -39,6 +39,12 @@ weightedsum_mx <- function(mx, w) {
     stop("weightedsum_mx(): length(w) != dim(mx)[3]")
   }
   
+  print("dim(w):")
+  print(dim(w))
+  
+  print("dim(mx):")
+  print(dim(mx))
+  
   for(i in 1:length(w)) {
     mx[,,i] <- w[i] * mx[,,i]
   }
