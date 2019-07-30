@@ -102,9 +102,33 @@ parallel <- function(p,q,w) {
   
   rtpALL = Isqrtm(p)
   rtp = rtpALL$B #sqrtm(p);
+  if(any(is.na(rtp))) {
+    stop("element of rtp is NA in parallel()")
+  }
+  if(any(is.null(rtp))) {
+    stop("element of rtp is NULL in parallel()")
+  }
   invrtp = rtpALL$Binv  #inv(rtp);
+  if(any(is.na(invrtp))) {
+    stop("element of invrtp is NA in parallel()")
+  }
+  if(any(is.null(invrtp))) {
+    stop("element of invrtp is NULL in parallel()")
+  }
   v = logmap_spd(p,q)
+  if(any(is.na(v))) {
+    stop("element of v is NA in parallel()")
+  }
+  if(any(is.null(v))) {
+    stop("element of v is NULL in parallel()")
+  }
   r = Iexpm(invrtp%*%(v/2)%*%invrtp)
+  if(any(is.na(r))) {
+    stop("element of r is NA in parallel()")
+  }
+  if(any(is.null(r))) {
+    stop("element of r is NULL in parallel()")
+  }
   w_new = rtp%*%r%*%invrtp%*%w%*%invrtp%*%r%*%rtp
   
   if(any(is.na(w_new))) {
