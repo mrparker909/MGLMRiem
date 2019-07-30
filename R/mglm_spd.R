@@ -154,6 +154,18 @@ safeguard <- function(gradp, gradV, p, c2) {
   normgradp = apply(ns,2,sum)#sum(ns)
   #norms = [ normgradp normgradv];
   maxnorm = max(normgradp, normgradv)#max(norms);
+  if(is.null(c2)) {
+    stop("c2 is NULL in safeguard()")
+  }
+  if(is.na(c2)) {
+    stop("c2 is NA in safeguard()")
+  }
+  if(is.null(maxnorm)) {
+    stop("maxnorm is NULL in safeguard()")
+  }
+  if(is.na(maxnorm)) {
+    stop("maxnorm is NA in safeguard()")
+  }
   if(maxnorm > c2) {
     gradV = gradV*c2/maxnorm
     gradp = gradp*c2/maxnorm
