@@ -67,6 +67,14 @@ mglm_spd <- function(X, Y, maxiter=500) {
     Y_hat = prediction_spd(p,V,X)
     J = logmap_vecs_spd(Y_hat, Y)        
     err_TpM = paralleltranslateAtoB_spd(a = Y_hat, b = p, w = J)
+    
+    if(any(is.na(err_TpM))) {
+      stop("element of err_TpM is NA in mglm_spd()")
+    }
+    if(any(is.null(err_TpM))) {
+      stop("element of err_TpM is NULL in mglm_spd()")
+    }
+    
     gradp = -1*apply(err_TpM, c(1,2), sum)#-sum(err_TpM,3);
 
     if(any(is.na(gradp))) {
