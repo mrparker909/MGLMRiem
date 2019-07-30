@@ -41,7 +41,7 @@ addrelnoise_spd <- function(A, maxerr) {
 #' @export
 addSNR_spd <- function(A, SNR) {
   V = randsym(sizeR(A,1))
-  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*(runif(1,0,SNR)))
+  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*(runif(1,0,1/SNR)))
   Anew = expmap_spd(A, V)
   return(Anew)
 }
