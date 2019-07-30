@@ -123,6 +123,9 @@ parallel <- function(p,q,w) {
     stop("element of v is NULL in parallel()")
   }
   r = Iexpm(invrtp%*%(v/2)%*%invrtp)
+  if(any(r > 10^150)) {
+    warning("Iexpm in parallel had very large elements, try setting pKarcher=T")
+  }
   if(any(is.na(r))) {
     stop("element of r is NA in parallel()")
   }

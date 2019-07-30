@@ -7,9 +7,10 @@
 #' @param X       X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.
 #' @param Y       Y is a p by p by N array of p by p symmetric positive definite response matrices.
 #' @param maxiter maxiter is the maximum number of iterations before the optimization algorithm stops searching for an optimum. If the algorithm stops before reaching maxiters, then the "converged" variable will be set to TRUE, otherwise it will be set to FALSE.
+#' @param pKarcher if TRUE, the estimated base point p will start at the Karcher mean of the observed SPD matrices Y, otherwise the starting point will be the identity matrix.
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached).
 #' @export
-mglm_spd <- function(X, Y, maxiter=500) {
+mglm_spd <- function(X, Y, maxiter=500, pKarcher=F) {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
 #
 #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)
@@ -47,6 +48,10 @@ mglm_spd <- function(X, Y, maxiter=500) {
 
 # Initialization
   p <- diag(rep(1, times=ndimY)) #p = Y(:,:,1); 
+  if(pKarcher) {
+    p = karcher_mean_spd(X=Y,niter=200)
+  }
+  
   V <- array(data = 0, dim = c(ndimY, ndimY, ndimX)) #V = zeros([ndimY ndimY ndimX]);
 
 # Gradient Descent algorith
