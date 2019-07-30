@@ -65,7 +65,23 @@ mglm_spd <- function(X, Y, maxiter=500) {
   step = c1
   for(niter in 1:maxiter) {
     Y_hat = prediction_spd(p,V,X)
-    J = logmap_vecs_spd(Y_hat, Y)        
+    
+    if(any(is.na(Y_hat))) {
+      stop("element of Y_hat is NA in mglm_spd()")
+    }
+    if(any(is.null(Y_hat))) {
+      stop("element of Y_hat is NULL in mglm_spd()")
+    }
+    
+    J = logmap_vecs_spd(Y_hat, Y) 
+    
+    if(any(is.na(J))) {
+      stop("element of J is NA in mglm_spd()")
+    }
+    if(any(is.null(J))) {
+      stop("element of J is NULL in mglm_spd()")
+    }
+    
     err_TpM = paralleltranslateAtoB_spd(a = Y_hat, b = p, w = J)
     
     if(any(is.na(err_TpM))) {
