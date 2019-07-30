@@ -84,6 +84,14 @@ parallel <- function(p,q,w) {
   v = logmap_spd(p,q)
   r = Iexpm(invrtp%*%(v/2)%*%invrtp)
   w_new = rtp%*%r%*%invrtp%*%w%*%invrtp%*%r%*%rtp
+  
+  if(any(is.na(w_new))) {
+    stop("element of w_new is NA in parallel()")
+  }
+  if(any(is.null(w_new))) {
+    stop("element of w_new is NULL in parallel()")
+  }
+  
   return(w_new)
 }
 
