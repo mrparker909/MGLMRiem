@@ -69,13 +69,28 @@ mglm_spd <- function(X, Y, maxiter=500) {
     err_TpM = paralleltranslateAtoB_spd(a = Y_hat, b = p, w = J)
     gradp = -1*apply(err_TpM, c(1,2), sum)#-sum(err_TpM,3);
 
+    if(any(is.na(gradp))) {
+      stop("element of gradp is NA in mglm_spd()")
+    }
+    if(any(is.null(gradp))) {
+      stop("element of gradp is NULL in mglm_spd()")
+    }
+    
     # v projection on to tanget space
     gradV = array(0, dim=sizeR(V)) # zeros(size(V));
 
     # Matrix multiplicaton
     for(iV in 1:sizeR(V,3)) {
       gradV[,,iV] = -weightedsum_mx(err_TpM,X[iV,])
+      
+      if(any(is.na(gradV[,,iV]))) {
+        stop("element of gradV[,,iV] is NA in mglm_spd()")
+      }
+      if(any(is.null(gradV[,,iV]))) {
+        stop("element of gradV[,,iV] is NULL in mglm_spd()")
+      }
     }
+    
 
     ns = normVs(p,V = gradV)
     normgradv = apply(ns,2,sum) #sum(ns)
