@@ -78,6 +78,28 @@ repmat2 = function(X,n) {
 
 parallel <- function(p,q,w) {
   #if(length(dim(p)) > 2) stop(paste0("dim(p)=",dim(p)))
+  
+  if(any(is.na(p))) {
+    stop("element of p is NA in parallel()")
+  }
+  if(any(is.null(p))) {
+    stop("element of p is NULL in parallel()")
+  }
+  
+  if(any(is.na(q))) {
+    stop("element of q is NA in parallel()")
+  }
+  if(any(is.null(q))) {
+    stop("element of q is NULL in parallel()")
+  }
+  
+  if(any(is.na(w))) {
+    stop("element of w is NA in parallel()")
+  }
+  if(any(is.null(w))) {
+    stop("element of w is NULL in parallel()")
+  }
+  
   rtpALL = Isqrtm(p)
   rtp = rtpALL$B #sqrtm(p);
   invrtp = rtpALL$Binv  #inv(rtp);
