@@ -142,6 +142,12 @@ normVs <- function(p,V) {
   for(i in 1:sizeR(V,3)) {
     ns[i,1] = norm_TpM_spd(p=p,v=V[,,i])
   }
+  if(any(is.na(ns))) {
+    stop("element of ns is NA in normVs()")
+  }
+  if(any(is.null(ns))) {
+    stop("element of ns is NULL in normVs()")
+  }
   return(ns)
 }
 
