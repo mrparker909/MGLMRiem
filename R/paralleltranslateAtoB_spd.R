@@ -132,6 +132,8 @@ parallel <- function(p,q,w) {
   w_new = rtp%*%r%*%invrtp%*%w%*%invrtp%*%r%*%rtp
   
   if(any(is.na(w_new))) {
+    print("w_new")
+    print(w_new)
     stop("element of w_new is NA in parallel()")
   }
   if(any(is.null(w_new))) {
