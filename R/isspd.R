@@ -64,7 +64,7 @@ isspd <- function(mx,c=.Machine$double.eps) {
 
 #' @export
 issym <- function(mx) {
-  if(require(Rfast, quietly = T)) { return(Rfast::is.symmetric(round(mx, 6))) } else {
+  if(suppressWarnings(require(Rfast, quietly = T))) { return(Rfast::is.symmetric(round(mx, 6))) } else {
     tol = 0.00001
     S = array(0, dim=c(sizeR(mx,3), 1)) #zeros(size(mx,3),1);
 
