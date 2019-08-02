@@ -54,7 +54,7 @@ logmap_spd <- function(P,X) {
   D   <- diag(EIG$values)
   
   
-  if(any(D<=0)) {
+  if(any(EIG$values<=0)) {
     warning("spd P had non-positive eigenvalues in logmap_spd")
   }
   
