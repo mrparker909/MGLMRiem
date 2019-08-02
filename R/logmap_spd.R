@@ -47,11 +47,16 @@ logmap_spd <- function(P,X) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $  
 
    
-  if(norm(P-X,"2") < 1e-18) { return(array(0, dim=dim(P))) }
+  if(norm(P-X,"2") < 1e-16) { return(array(0, dim=dim(P))) }
 
   EIG <- eigen(P,symmetric = T) # eigen(P)
   U   <- EIG$vectors
   D   <- diag(EIG$values)
+  
+  
+  if(any(U<=0)) {
+    warning("spd P had non-positive eigenvalues in logmap_spd")
+  }
   
   g    = U%*%sqrt(D)
   invg = solve(g)
@@ -60,7 +65,7 @@ logmap_spd <- function(P,X) {
   EIG <- eigen(y,symmetric = T) # eigen(y)
   V   <- EIG$vectors
   S   <- EIG$values
-
+  
   H = g%*%V
   v = H%*%diag(log(S))%*%t(H)
 
