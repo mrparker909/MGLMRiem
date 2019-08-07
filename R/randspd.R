@@ -46,7 +46,7 @@ randspd_FAST <- function(n, maxDist=3, showDist=F) {
   curDist = dist_M_spd(P,In)
   while(curDist > maxDist ) {
     L = logmap_spd(P,In)
-    P = expmap_spd(P,L/10)
+    P = expmap_spd(P,L/2)
     
     curDist = dist_M_spd(P,In)
   }
