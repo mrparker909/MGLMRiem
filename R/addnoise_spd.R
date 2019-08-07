@@ -38,10 +38,17 @@ addrelnoise_spd <- function(A, maxerr) {
 }
 
 #' add noise relative to A where SNR is the signal (A) to noise ratio
+#' note that the karcher mean is used so that the signal strength can be
+#' estimated
 #' @export
-addSNR_spd <- function(A, SNR) {
+addSNR_spd <- function(A, SNR, kMean=NULL) {
+  B = A
+  if(!is.null(kMean)) {
+    B = logmap_spd(kMean,A)
+  }
   V = randsym(sizeR(A,1))
-  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*(runif(1,0,1/SNR)))
+  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,B)*(runif(1,0,1/SNR)))
   Anew = expmap_spd(A, V)
+  
   return(Anew)
 }
