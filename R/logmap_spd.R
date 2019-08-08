@@ -48,7 +48,12 @@ logmap_spd <- function(P,X) {
 
    
   if(norm(P-X,"2") < 1e-16) { return(array(0, dim=dim(P))) }
-
+  
+  if(!isspd(P)) {
+    warning("P was not spd in logmap_spd()")
+    P = proj_M_spd(P)
+  }
+  
   EIG <- eigen(P,symmetric = T) # eigen(P)
   U   <- EIG$vectors
   D   <- diag(EIG$values)
