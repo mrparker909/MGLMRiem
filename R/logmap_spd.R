@@ -66,6 +66,11 @@ logmap_spd <- function(P,X) {
   V   <- EIG$vectors
   S   <- EIG$values
   
+  S = ifelse(S<1e-8, 1e-8, S)
+  
+  if(any(S < 0 )) { stop("spd y has negative eigenvalues in logmap_spd()") }
+  if(any(is.infinite(S))) { warning("spd S has 0 as an eigenvalue in logmap_spd()") }
+  
   H = g%*%V
   v = H%*%diag(log(S))%*%t(H)
 
