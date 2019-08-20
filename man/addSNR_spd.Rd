@@ -2,10 +2,12 @@
 % Please edit documentation in R/addnoise_spd.R
 \name{addSNR_spd}
 \alias{addSNR_spd}
-\title{add noise relative to A where SNR is the signal (A) to noise ratio}
+\title{add noise relative to A where SNR is the signal (A) to noise ratio,
+num_cov allows scaling the SNR by the number of covariates}
 \usage{
-addSNR_spd(A, SNR)
+addSNR_spd(A, SNR, num_cov = 1)
 }
 \description{
-add noise relative to A where SNR is the signal (A) to noise ratio
+add noise relative to A where SNR is the signal (A) to noise ratio,
+num_cov allows scaling the SNR by the number of covariates
 }

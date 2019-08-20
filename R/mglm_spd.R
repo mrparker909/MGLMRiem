@@ -8,9 +8,10 @@
 #' @param Y       Y is a p by p by N array of p by p symmetric positive definite response matrices.
 #' @param maxiter maxiter is the maximum number of iterations before the optimization algorithm stops searching for an optimum. If the algorithm stops before reaching maxiters, then the "converged" variable will be set to TRUE, otherwise it will be set to FALSE.
 #' @param pKarcher if TRUE, the estimated base point p will start at the Karcher mean of the observed SPD matrices Y, otherwise the starting point will be the identity matrix.
+#' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running MGLM algorithm.
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached).
 #' @export
-mglm_spd <- function(X, Y, maxiter=500, pKarcher=F) {
+mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F) {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
 #
 #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)
@@ -36,6 +37,11 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $
 
 # X is nxN (n observations as rows, N covariates as columns)
+  
+  if(enableCheckpoint) {
+    print(paste0("writing checkpoint file to ", getwd(),"/checkpoint.rda"))
+  }
+  
 # ndimX = N = number of covariates
   ndimX = sizeR(X,1) #size(X,1);
 
@@ -168,6 +174,15 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F) {
     # stopping condition
     if(moved != 1 || gnorm[length(gnorm)] < 1e-10) {
       break 
+    } else {
+      # Checkpoint
+      if(enableCheckpoint) {
+        checkpoint = list(
+          X=X, Y=Y, p=p, V=V, E=E, gnorm=gnorm, niter=niter
+        )
+        #print(paste0("writing checkpoint to ", getwd(),"/checkpoint.rda"))
+        save(checkpoint, file="./checkpoint.rda")
+      }
     }
   }
 
