@@ -33,25 +33,31 @@ randspd <- function(n, c=3, udist=3) {
 #' @param n        dimensions of nxn SPD matrix
 #' @param maxDist  maximum scale of random component P of SPD matrix (projected from I_nxn with expmap(I,m*P), where m in runif(0,maxDist)).
 #' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
+#' @param NUM      the number of SPD matrices to return (if larger than 1, will return an nxnxNUM array of nxn spd matrices).
 #' @export
-randspd_FAST <- function(n, maxDist=3, showDist=F) {
+randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1) {
   # 'central point' on spd cone, identity matrix
   In = diag(rep(1,n))
 
-  # random SPD
-  aDist = runif(1,0,maxDist)
-  P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
-  
-  # control distance from In
-  curDist = dist_M_spd(P,In)
-  while(curDist > maxDist ) {
-    L = logmap_spd(P,In)
-    P = expmap_spd(P,L/2)
+  Y = array(0, dim=c(n,n,NUM))
+  for(i in 1:NUM) {
+    # random SPD
+    aDist = runif(1,0,maxDist)
+    P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
     
+    # control distance from In
     curDist = dist_M_spd(P,In)
+    while(curDist > maxDist ) {
+      L = logmap_spd(P,In)
+      P = expmap_spd(P,L/2)
+      
+      curDist = dist_M_spd(P,In)
+    }
+    if(showDist) print(curDist)
+    if(!isspd(P)) stop("randsdp_FAST: GENERATED P IS NOT SPD")
+    Y[,,i] = P
   }
-  if(showDist) print(curDist)
-  if(!isspd(P)) stop("randsdp_FAST: GENERATED P IS NOT SPD")
-  return(P)
+  if(NUM==1) { Y=Y[,,1] }
+  return(Y)
 }
 

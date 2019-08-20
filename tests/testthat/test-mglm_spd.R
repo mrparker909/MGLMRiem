@@ -7,6 +7,8 @@ test_that("mglm_spd works dim=3x3", {
   
   mg <- mglm_spd(X = X,Y = Y, maxiter = 50)
   expect_equal(is.null(mg$Yhat), F)
+  expect_equal(calc_Rsqr_spd(mg$Y, mg$Yhat)>=0, T)
+  expect_equal(calc_Rsqr_spd(mg$Y, mg$Yhat)<=1, T)
 })
 
 test_that("mglm_spd works, dim=5x5", {
