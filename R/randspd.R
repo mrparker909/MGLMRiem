@@ -32,26 +32,34 @@ randspd <- function(n, c=3, udist=3) {
 #' @description Generate a random Symmetric Positive Definite matrix of dimension n, such that the maximum distance on the manifold is less than maxDist. Makes use of the sparsebnUtils::random.spd function from the library sparsebnUtils.
 #' @param n        dimensions of nxn SPD matrix
 #' @param maxDist  maximum scale of random component P of SPD matrix (projected from I_nxn with expmap(I,m*P), where m in runif(0,maxDist)).
+#' @param minDist  minimum scale of random component of P of SPD matrix
 #' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
 #' @param NUM      the number of SPD matrices to return (if larger than 1, will return an nxnxNUM array of nxn spd matrices).
 #' @export
-randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1) {
+randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
+  if(minDist==maxDist) {
+    warning("minDist == maxDist, setting minDist = 0")
+    minDist=0
+  }
   # 'central point' on spd cone, identity matrix
   In = diag(rep(1,n))
 
   Y = array(0, dim=c(n,n,NUM))
   for(i in 1:NUM) {
-    # random SPD
-    aDist = runif(1,0,maxDist)
-    P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
-    
-    # control distance from In
-    curDist = dist_M_spd(P,In)
-    while(curDist > maxDist ) {
-      L = logmap_spd(P,In)
-      P = expmap_spd(P,L/2)
+    while(T) {
+      # random SPD
+      aDist = runif(1,minDist,maxDist)
+      P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
       
+      # control distance from In
       curDist = dist_M_spd(P,In)
+      while(curDist > maxDist ) {
+        L = logmap_spd(P,In)
+        P = expmap_spd(P,L/2)
+        
+        curDist = dist_M_spd(P,In)
+      }
+      if(curDist > minDist) break
     }
     if(showDist) print(curDist)
     if(!isspd(P)) stop("randsdp_FAST: GENERATED P IS NOT SPD")
