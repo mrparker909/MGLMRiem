@@ -172,8 +172,12 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F) {
       }
     }
     # stopping condition
-    if(moved != 1 || gnorm[length(gnorm)] < 1e-10) {
+    if(moved != 1) {
       break 
+    } else if(gnorm[length(gnorm)] < 1e-10) {
+      break
+    } else if(abs(E[length(E)] - E[length(E)-1]) < 1e-16) {
+      break
     } else {
       # Checkpoint
       if(enableCheckpoint) {
@@ -190,7 +194,7 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F) {
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]
-  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm, converged=!(niter>=maxiter)))
+  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm, converged=!(niter>=maxiter), MGLMsteps=niter))
 }
 
 # NormVs
