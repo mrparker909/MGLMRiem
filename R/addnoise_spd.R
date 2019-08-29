@@ -38,14 +38,29 @@ addrelnoise_spd <- function(A, maxerr) {
 }
 
 #' add noise relative to A where SNR is the signal (A) to noise ratio,
-#' num_cov allows scaling the SNR by the number of covariates
+#' num_cov allows scaling the SNR by the number of covariates, 
+#' taper=T reduces the noise exponentially as distance from the diagonal increases (1/2^d)
 #' @export
-addSNR_spd <- function(A, SNR, num_cov=1) {
+addSNR_spd <- function(A, SNR, num_cov=1,taper=F) {
   SNR = SNR * num_cov
   V = randsym(sizeR(A,1))
   V = V %*% t(V)
-  V = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)*(runif(1,0,1/SNR)))
-  Anew = expmap_spd(A,V)
   
+  #print(V)
+  if(taper) {
+    for(row in 1:nrow(A)) {
+      for(col in 1:ncol(A)) {
+        V[row,col] = V[row,col]/(2^(abs(row-col)+1))
+      }
+    }
+  }
+  #print(V)
+  
+  D = V/norm_TpM_spd(A,V)*(norm_TpM_spd(A,A)/SNR)
+  Anew = proj_M_spd(expmap_spd(A,D))
+  
+  #print(norm_TpM_spd(A,A)/(norm_TpM_spd(A,D)))
+  #print(norm_TpM_spd(A,A)/norm_TpM_spd(A,Anew))
+  if(!isspd(Anew)) warning("WARNING: random SPD is NOT SPD")
   return(Anew)
 }

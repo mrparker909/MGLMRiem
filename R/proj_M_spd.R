@@ -63,6 +63,11 @@ proj_M_spd <- function(X,c=.Machine$double.eps) {
   #   Migrated to R by Matthew RP Parker
   #   $Revision: 0.2 $  $Date: 2019/06/07 $ 
   
+  # if SPD already, do nothing
+  if(isspd(X)) {
+    return(X)
+  }
+  
   # Make a matrix symmetric positive definite.
   if(max(svd(X-t(X))$d) > c) {
           X = (X+t(X))/2
