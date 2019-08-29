@@ -46,3 +46,18 @@ r2stat_spd <- function(Y_bar, Y, Y_hat) {
   
   return(r2)
 }
+
+
+#' @export
+r2stat_euc <- function(Y_bar, Y, Y_hat) {
+  
+  gvar = gsqerr_euc(repmat(Y_bar,sizeR(Y,3)), Y)
+  uvar = gsqerr_euc(Y, Y_hat)
+  r2 = 1-uvar/gvar
+  
+  if(r2 > 1 | r2 < 0) {
+    warning(paste0("r2 outside of [0,1], uvar=",uvar," gvar=",gvar))
+  }
+  
+  return(r2)
+}

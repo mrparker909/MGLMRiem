@@ -32,3 +32,14 @@ dist_M_spd <- function(X,Y) {
   
   return(d)
 }
+
+#' @export
+dist_M_euc <- function(X,Y) {
+  #DIST_M_EUC returns distance between X and Y in Euclidean space.
+  #
+  #   d = DIST_M_EUC(X,Y)
+  
+  d = sqrt(sum(diag( t(X) %*% Y )))
+  
+  return(d)
+}

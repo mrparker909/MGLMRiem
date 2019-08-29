@@ -49,3 +49,22 @@ gsqerr_spd <- function(X, X_hat) {
   }
   return(gsr)
 }
+
+
+#' @export
+gsqerr_euc <- function(X, X_hat) {
+  d <- sizeR(X)
+  ndata <- d[3]
+  if(is.na(ndata)) { 
+    X     <- aug3(X)     
+    X_hat <- aug3(X_hat)
+    d <- sizeR(X)
+    ndata <- d[3]
+  }
+  
+  gsr = 0
+  for(idata in 1:ndata) {  
+    gsr = gsr + dist_M_euc(X = X[,,idata],Y = X_hat[,,idata])^2
+  }
+  return(gsr)
+}
