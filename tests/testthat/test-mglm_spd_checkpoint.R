@@ -24,4 +24,19 @@ test_that("checkpointing works", {
   expect_equal(T, res2$converged)
   
   
+  # create checkpoint file
+  res1=mglm_spd(X = as.matrix(t(X)), Y = Y, maxiter = 200, enableCheckpoint = T, checkpointPath="./output/")
+  expect_equal(F, res1$converged)
+  
+  # load checkpoint file
+  load("./output/checkpoint.rda")
+  
+  # delete checkpoint file
+  file.remove("checkpoint.rda")
+  
+  # run from checkpoint file
+  res2=mglm_spd_checkpoint(checkpoint, maxiter = 5, enableCheckpoint=T, checkpointPath="./output/")
+  expect_equal(T, res2$converged)
+  
+  
 })
