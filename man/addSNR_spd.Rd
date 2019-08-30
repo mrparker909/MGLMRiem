@@ -3,11 +3,13 @@
 \name{addSNR_spd}
 \alias{addSNR_spd}
 \title{add noise relative to A where SNR is the signal (A) to noise ratio,
-num_cov allows scaling the SNR by the number of covariates}
+num_cov allows scaling the SNR by the number of covariates, 
+taper=T reduces the noise exponentially as distance from the diagonal increases (1/2^d)}
 \usage{
-addSNR_spd(A, SNR, num_cov = 1)
+addSNR_spd(A, SNR, num_cov = 1, taper = F)
 }
 \description{
 add noise relative to A where SNR is the signal (A) to noise ratio,
-num_cov allows scaling the SNR by the number of covariates
+num_cov allows scaling the SNR by the number of covariates, 
+taper=T reduces the noise exponentially as distance from the diagonal increases (1/2^d)
 }

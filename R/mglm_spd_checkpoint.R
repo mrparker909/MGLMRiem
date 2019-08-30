@@ -3,9 +3,10 @@
 #' @param checkpoint a checkpoint list object containing: X (the covariate data), Y (the response data), p (the current base point estimate), V (the current coefficient estimates), E (the objective function history), gnorm (the norm of the gradient history), niter (the number of iterations in the checkpoint)
 #' @param maxiter maxiter is the maximum number of iterations before the optimization algorithm stops searching for an optimum. If the algorithm stops before reaching maxiters, then the "converged" variable will be set to TRUE, otherwise it will be set to FALSE. Note that maxiter does NOT include the number of iterations loaded from the checkpoint.
 #' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running MGLM algorithm.
+#' @param checkpointPath path to write checkpoint.rda file (if enableCheckpoint=TRUE).
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached).
 #' @export
-mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T) {
+mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, checkpointPath="./") {
   # MGLM_SPD performs MGLM on SPD manifolds by interative method.
   #
   #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)
@@ -35,7 +36,7 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T) {
   
   
   if(enableCheckpoint) {
-    print(paste0("writing checkpoint file to ", getwd(),"/checkpoint.rda"))
+    print(paste0("writing checkpoint file to ", getwd(),checkpointPath,"checkpoint.rda"))
   }
   
   X=checkpoint$X
@@ -171,7 +172,7 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T) {
         checkpoint = list(
           X=X, Y=Y, p=p, V=V, E=E, gnorm=gnorm, niter=niter
         )
-        save(checkpoint,file="checkpoint.rda")
+        save(checkpoint,file=paste0(checkpointPath,"checkpoint.rda"))
       }
     }
   }
