@@ -6,8 +6,7 @@ Implementing (as well as augmenting and modifying) the algorithms of Kim et al. 
 
 You will need to install from github:
 
-
-```r
+```{r eval=F}
 library(devtools)
 devtools::install_github("mrparker909/MGLMRiem")
 ```
@@ -18,8 +17,7 @@ devtools::install_github("mrparker909/MGLMRiem")
 
 We will use the support package [genDataMGLMRiem](https://github.com/mrparker909/genDataMGLMRiem) to generate some example data to work with.
 
-
-```r
+```{r}
 # devtools::install_github("mrparker909/genDataMGLMRiem")
 library(genDataMGLMRiem)
 
@@ -43,8 +41,7 @@ simData = genDataMGLMRiem::genSPDdata(N = 10, dims = 3, C = X, minDist = 1, maxD
 
 ## Fit a MGLM Model
 
-
-```r
+```{r}
 library(MGLMRiem)
 mod1 = mglm_spd(X = simData$X, Y = simData$Y, pKarcher = T)
 ```
@@ -53,19 +50,13 @@ mod1 = mglm_spd(X = simData$X, Y = simData$Y, pKarcher = T)
 
 We can look at the R squared (variance explained within the SPD manifold):
 
-
-```r
+```{r}
 calc_Rsqr_spd(Y = simData$Y, Yhat = mod1$Yhat)
-```
-
-```
-## [1] 0.7797107
 ```
 
 We can also look at the sums of squares:
 
-
-```r
+```{r}
 # Looking at only the upper triangular of the SPD matrices, since they are symmetric
 
 # upper triangular of the mean of the observed SPD matrices
@@ -100,8 +91,8 @@ So we can easily calculate SSE, SSR, and SST.
 
 And from those we can get at the proportions of explained and unexplained variance:
 
-- Explained Variance = SSR/SST = 0.6301951
-- Unexplained Variance = SSE/SST = 0.2674859
+- Explained Variance = SSR/SST = `r SSR/SST`
+- Unexplained Variance = SSE/SST = `r SSE/SST`
 
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
