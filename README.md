@@ -81,9 +81,9 @@ And from those we can get at the proportions of explained and unexplained varian
 
 - Explained Variance = SSR/SST = 0.7779927
 - Unexplained Variance = SSE/SST = 0.2202893
-- Manifold Variance = 1 - SSE/SST - SSR/SST = 0.001718
+- 'Manifold' Variance = 1 - SSE/SST - SSR/SST = 0.001718
 
-Notice that due to the manifold nature of the data, $SSE + SSR \ne SST$.
+Note that the 'Manifold' variance is error due to the manifold structure of the response, and the location of the residuals in the tangent space of the manifold (rather than on the manifold itself).
 
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
