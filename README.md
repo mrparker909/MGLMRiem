@@ -33,7 +33,8 @@ C2 = genDataMGLMRiem::SimConfoundData(n = 10, D = rnorm)
 # Put them together to form our X observations:
 X = rbind(C1, C2)
 
-2) Generate dependent SPD data
+# 2) Generate dependent SPD data
+# generate 10 3x3 SPD matrices with a covariate effect size between 1 and 2.
 simData = genDataMGLMRiem::genSPDdata(N = 10, dims = 3, C = X, minDist = 1, maxDist = 2)
 ```
 
@@ -85,16 +86,12 @@ for(i in 1:6) {
 }
 ```
 
-So we can easily calculate SSE, SSR, and SST:
-
-- SSE = `r SSE`
-- SSR = `r SSR`
-- SST = `r SST`
+So we can easily calculate SSE, SSR, and SST.
 
 And from those we can get at the proportions of explained and unexplained variance:
 
-- Explained Variance = `r SSR/SST`
-- Unexplained Variance = `r SSE/SST`
+- Explained Variance = `SSR/SST`
+- Unexplained Variance = `SSE/SST`
 
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
