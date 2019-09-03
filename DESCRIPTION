@@ -1,7 +1,7 @@
 Package: MGLMRiem
 Type: Package
 Title: Multivariate Generalized Linear Models on Riemannian Manifolds
-Version: 0.2.2
+Version: 0.2.3
 Author: Matthew R. P. Parker
 Maintainer: <mrparker909@gmail.com>
 Description: This is the algorithm from the conference paper: Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352. Credit goes to the paper authors, blame for errors in code goes to Matthew RP Parker 2019 (who ported the matlab code to R).
@@ -9,11 +9,13 @@ License:
 Encoding: UTF-8
 LazyData: true
 Imports:
-  expm,
-  MASS,
-  Matrix,
-  pracma,
-  sparsebnUtils
+    expm,
+    MASS,
+    Matrix,
+    pracma,
+    sparsebnUtils
+Remotes:
+    mrparker909/LimitedMemoryList
 RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0)

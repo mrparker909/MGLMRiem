@@ -10,9 +10,10 @@
 #' @param pKarcher if TRUE, the estimated base point p will start at the Karcher mean of the observed SPD matrices Y, otherwise the starting point will be the identity matrix.
 #' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running where the MGLM algorithm left off.
 #' @param checkpointPath path to write checkpoint.rda file (if enableCheckpoint=TRUE).
+#' @param Memory  Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimted' list length.
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
 #' @export
-mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpointPath="./") {
+mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpointPath="./", Memory=0) {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
 #
 #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)
@@ -72,8 +73,9 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
 
   E <- NULL #E = [];
   gnorm <- NULL #gnorm = [];
-  E <- c(E,feval_spd(p,V,X,Y))#E = [E; feval_spd(p,V,X,Y)];
-
+  # E <- c(E,feval_spd(p,V,X,Y))#E = [E; feval_spd(p,V,X,Y)];
+  E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y))
+  
   step = c1
   for(niter in 1:maxiter) {
     Y_hat = prediction_spd(p,V,X)
@@ -157,16 +159,19 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
       V_new = paralleltranslateAtoB_spd(a = p,b = p_new,w = V_new)
       E_new = feval_spd(p_new, V_new, X, Y)
 
-      if(E[length(E)] > E_new) {
+      if(E[1] > E_new) {
         p = p_new
         V = proj_TpM_spd(V_new)
-        E = c(E, E_new)
+        # E = c(E, E_new)
+        E <- LimitedMemoryList::LMc(new_el = E_new, old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
 
         if(!is.double(gnorm_new)) {
           stop('Numerical error, gnorm_new is not a double (mglm_spd.R)')
         }
 
-        gnorm = c(gnorm, gnorm_new)
+        #gnorm = c(gnorm, gnorm_new)
+        gnorm <- LimitedMemoryList::LMc(new_el = gnorm_new, old_list = gnorm, M = ifelse(Memory==0, 1+length(gnorm),Memory))
+        
         moved = 1
         step = step*2
         break
@@ -175,9 +180,9 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
     # stopping condition
     if(moved != 1) {
       break 
-    } else if(gnorm[length(gnorm)] < 1e-10) {
+    } else if(gnorm[1] < 1e-10) {
       break
-    } else if(abs(E[length(E)] - E[length(E)-1]) < 1e-16) {
+    } else if(abs(E[1] - E[2]) < 1e-16) {
       break
     } else {
       # Checkpoint
@@ -191,7 +196,9 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
     }
   }
 
-  E = c(E, feval_spd(p,V,X,Y))
+  #E = c(E, feval_spd(p,V,X,Y))
+  E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]

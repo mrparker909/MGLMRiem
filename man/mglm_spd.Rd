@@ -5,7 +5,7 @@
 \title{mglm_spd}
 \usage{
 mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
-  checkpointPath = "./")
+  checkpointPath = "./", Memory = 0)
 }
 \arguments{
 \item{X}{X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.}
@@ -19,6 +19,8 @@ mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
 \item{enableCheckpoint}{if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running where the MGLM algorithm left off.}
 
 \item{checkpointPath}{path to write checkpoint.rda file (if enableCheckpoint=TRUE).}
+
+\item{Memory}{Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimted' list length.}
 }
 \value{
 returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
