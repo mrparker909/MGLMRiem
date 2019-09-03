@@ -1,8 +1,8 @@
-# MGLM_Riem
+# MGLMRiem: Multivariate Generalized Linear Models on Riemann Manifolds
 
 
  
-Implementing (as well as augmenting and modifying) the algorithms of Kim et al. 2014 for regressing multiple symmetric positive definite matrices against real valued covariates. The original code from which this repo is based was written in Matlab, and is available from NITRC: [mglm_riem](https://www.nitrc.org/projects/riem_mglm). As well, the surrounding works are hosted on the University of Wisconsin website: [Hyunwoo J. Kim (2014)](http://pages.cs.wisc.edu/~hwkim/projects/riem-mglm/).
+Implementing in R (as well as augmenting and modifying) the algorithms of Kim et al. 2014 for regressing multiple symmetric positive definite matrices against real valued covariates. The original code from which this repo is based was written in Matlab, and is available from NITRC: [mglm_riem](https://www.nitrc.org/projects/riem_mglm). As well, the surrounding works are hosted on the University of Wisconsin website: [Hyunwoo J. Kim (2014)](http://pages.cs.wisc.edu/~hwkim/projects/riem-mglm/).
 
 # How to Install
 
@@ -53,10 +53,23 @@ mod1 = mglm_spd(X = simData$X, Y = simData$Y, pKarcher = T)
 
 ## Model Diagnostics
 
-We can look at the R squared (variance explained within the SPD manifold):
+We should check that the model converged! If it did not, we would either increase the maximum iterations via maxiters, or implement checkpointing.
 
 
 ```r
+# Did the model converge?
+mod1$converged
+```
+
+```
+## [1] TRUE
+```
+
+Since the model converged, we can look at the R squared (variance explained within the SPD manifold):
+
+
+```r
+# calculate the Rsquared on the manifold
 calc_Rsqr_spd(Y = simData$Y, Yhat = mod1$Yhat)
 ```
 
@@ -82,7 +95,9 @@ And from those we can get at the proportions of explained and unexplained varian
 - Unexplained Variance = SSE/SST = 0.2202893
 - 'Manifold' Variance = SSM/SST = 1 - SSE/SST - SSR/SST = 0.001718
 
-Note that the 'Manifold' variance is error due to the manifold structure of the response, and the location of the residuals in the tangent space of the manifold (rather than on the manifold itself). Thus it could be considered as part of Explained Variance, and is implicitly included in the R squared calculation: R^2 = (SSR+SSM)/SST = 1-SSE/SST = 0.7797107. An alternative, more conservative approach, would be to consider SSM as unexplained, in which case you could define a conservative R^2 as R^2 = SSR/SST = 0.7779927.
+Note that the 'Manifold' variance is error due to the manifold structure of the response, and the location of the residuals in the tangent space of the manifold (rather than on the manifold itself). Thus it could be considered as part of Explained Variance, and is implicitly included in the R squared calculation: R^2 = (SSR+SSM)/SST = 1-SSE/SST = 0.7797107. 
+
+An alternative, more conservative approach, would be to consider SSM as unexplained, in which case you could define a conservative R^2 as R^2 = SSR/SST = 0.7779927.
 
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
