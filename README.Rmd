@@ -88,6 +88,41 @@ Note that the 'Manifold' variance is error due to the manifold structure of the 
 
 An alternative, more conservative approach, would be to consider SSM as unexplained, in which case you could define a conservative R^2 as R^2 = SSR/SST = `r SSR/SST`.
 
+## Checkpointing
+
+It can be difficult to estimate the number of iterations necessary for the model to converge, and it is very wasteful in terms of computing time to run an algorithm for say 1000 iterations, only to find that 1000 was not enough, then to repeat for larget and larger iterations until finding an appropriate number. It can also be infeasible to run an algorithm long enough in one sitting (for example if a system needs to be rebooted intermittently). Whatever the reason, if you need to be able to stop the algorithm, and restart it from where you left off, you can enable checkpointing very easily:
+
+```{r}
+# Here we reduce the number of iterations to 100, which is not
+# large enough for the algorithm to converge
+mod2 = mglm_spd(X = simData$X, Y = simData$Y, pKarcher = T, 
+                maxiter = 100, enableCheckpoint = T)
+```
+
+The model has not converged:
+
+```{r}
+mod2$converged
+```
+
+However, the checkpoint.rda file has been written, and can be used to load the checkpoint into R:
+
+```{r}
+load("checkpoint.rda")
+```
+
+Now the checkpoint object is loaded into R, and can be used as a starting point for the mglm_spd algorithm:
+
+```{r}
+mod3 = mglm_spd_checkpoint(checkpoint)
+```
+
+Now the model has converged:
+
+```{r}
+mod3$converged
+```
+
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
 
