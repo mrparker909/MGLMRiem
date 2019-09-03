@@ -69,43 +69,21 @@ We can also look at the sums of squares:
 
 
 ```r
-# Looking at only the upper triangular of the SPD matrices, since they are symmetric
-
-# upper triangular of the mean of the observed SPD matrices
-up_kar = extractUT(karcher_mean_spd(simData$Y, niter=100), dims = 3, includeDiagonal = T)
-
-# upper triangular of the estimated SPD matrices
-up_hat = extractUT(mod1$Yhat, dims = 3, includeDiagonal = T)
-
-# upper triangular of the observed SPD matrices
-up_obs = extractUT(simData$Y, dims = 3, includeDiagonal = T)
-
-# Calculate sum of squared error
-SSE = 0
-for(i in 1:6) {
-  SSE = SSE+sum((up_hat[,i]-up_obs[,i])^2)
-}
-
-# Calculate total sum of squares
-SST = 0
-for(i in 1:6) {
-  SST = SST+sum((up_kar[,i]-up_obs[,i])^2)
-}
-
-# Calculate regression sum of squares
-SSR = 0
-for(i in 1:6) {
-  SSR = SSR+sum((up_kar[,i]-up_hat[,i])^2)
-}
+Ybar = karcher_mean_spd(simData$Y, niter=200)
+SSE=SSE_spd(simData$Y, mod1$Yhat)
+SST=SST_spd(simData$Y, Ybar)
+SSR=SSR_spd(mod1$Yhat, Ybar)
 ```
 
-So we can easily calculate SSE, SSR, and SST.
+So we can easily calculate SSE=9.5953538, SSR= 33.8877806, and SST=43.5579652.
 
 And from those we can get at the proportions of explained and unexplained variance:
 
-- Explained Variance = SSR/SST = 0.6301951
-- Unexplained Variance = SSE/SST = 0.2674859
-- Manifold Variance = 1 - SSE/SST - SSR/SST = 0.1023189
+- Explained Variance = SSR/SST = 0.7779927
+- Unexplained Variance = SSE/SST = 0.2202893
+- Manifold Variance = 1 - SSE/SST - SSR/SST = 0.001718
+
+Notice that due to the manifold nature of the data, $SSE + SSR \ne SST$.
 
 # Disclaimer
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
@@ -114,3 +92,5 @@ This R package is under development, and bugs can be expected as well as sudden 
 # References
 
 Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352
+
+

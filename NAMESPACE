@@ -2,6 +2,9 @@
 
 export(Iexpm)
 export(Isqrtm)
+export(SSE_spd)
+export(SSR_spd)
+export(SST_spd)
 export(addSNR_spd)
 export(addnoise_spd)
 export(addrelnoise_spd)
