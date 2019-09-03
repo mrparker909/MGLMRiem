@@ -2,17 +2,17 @@
 % Please edit documentation in R/frechet_variance_spd.R
 \name{frechet_variance_spd}
 \alias{frechet_variance_spd}
-\title{Frechet Variance}
+\title{frechet_variance_spd}
 \usage{
 frechet_variance_spd(Y, pKarcher = NULL, maxiter = 200)
 }
 \arguments{
-\item{Y}{dxdxn array of dxd spd matrices to find the frechet variance of}
+\item{Y}{dxdxn array of dxd SPD matrices for which to find the Frechet Variance.}
 
-\item{pKarcher}{if not NULL, the karcher mean from which to center the variance. If NULL, the karcher mean will be calculated.}
+\item{pKarcher}{The Karcher mean from which to center the variance. If NULL, the Karcher mean will be calculated.}
 
-\item{maxiter}{if pKarcher is NULL, maxiter is the maximum number of iterations for calculating the karcher mean.}
+\item{maxiter}{if pKarcher is NULL, maxiter is the maximum number of iterations for calculating the Karcher mean.}
 }
 \description{
-Frechet Variance
+Calculates the Frechet Variance for a set of SPD matrices.
 }

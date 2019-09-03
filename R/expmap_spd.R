@@ -28,6 +28,10 @@
 # %    exp_p_v = rtP*expm(invrtP*V*invrtP)*rtP;
 # end
 
+#' @title expmap_spd
+#' @description Exponential Map projects a tangent vector X onto the SPD manifold at the point P. Analagous to P+X in euclidean space.
+#' @param P A point on the SPD manifold (a symmetric positive definite matrix).
+#' @param X A symmetric matrix (a matrix in the tangent space of the SPD manifold).
 #' @export
 expmap_spd <- function(P,X) {
 #EXPMAP_SPD maps tangent vector X onto SPD manifold.

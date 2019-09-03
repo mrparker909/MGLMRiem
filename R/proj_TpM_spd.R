@@ -11,6 +11,9 @@
 #     end
 # end
 
+#' @title proj_TpM_spd
+#' @description Projects a set of matrices V onto the tangent space of the SPD manifold (transforms each matrix into a symmetric matrix). 
+#' @param V A dxdxN array of dxd matrices to project onto the space of symmetric matrices.
 #' @export
 proj_TpM_spd <- function(V) {
   # PROJ_TPM_SPD projects a set of tangent V vectors onto TpM. Symmetrization.

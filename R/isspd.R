@@ -33,6 +33,10 @@
 #     T = (sum(S) == size(mx,3));
 # end
 
+#' @title isspd
+#' @description Checks whether a matrix is symmetric positive definite (SPD) or not. 
+#' @param mx Matrix to check.
+#' @param c The smallest eigenvalue threshold (eigenvalue larger than c implies non-zero eigenvalue, and SPD matrices have all non-zero eigenvalues).
 #' @export
 isspd <- function(mx,c=.Machine$double.eps) {
   #ISSPD check mx is a symmetric positive definite matrix.
@@ -62,6 +66,9 @@ isspd <- function(mx,c=.Machine$double.eps) {
   return(all(t == T))
 }
 
+#' @title issym
+#' @description Checks whether a matrix is symmetric or not. Note that this function takes advantage of the package Rfast if it is installed.
+#' @param mx Matrix to check.
 #' @export
 issym <- function(mx) {
   if(suppressWarnings(require(Rfast, quietly = T))) { return(Rfast::is.symmetric(round(mx, 6))) } else {

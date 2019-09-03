@@ -20,6 +20,12 @@
 #   P_hat = prediction_spd(p,V,X);
 # E = gsqerr_spd(Y, P_hat);
 
+#' @title feval_spd
+#' @description Calculates the sum of squared geodesic errors (which mglm_spd() tries to minimize).
+#' @param X X is a set of column vectors.
+#' @param p p is the base point.
+#' @param V V is a set of symmetric matrices.
+#' @param Y Y is a set of SPD matrices.
 #' @export
 feval_spd <- function(p,V,X,Y) {
 # FEVAL_SPD evaluates the objective function value (the sum of squared geodesic errors) of MGLM on SPD. 

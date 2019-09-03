@@ -2,19 +2,19 @@
 % Please edit documentation in R/frechet_variance_spd.R
 \name{calc_Rsqr_euc}
 \alias{calc_Rsqr_euc}
-\title{Calculate R Squared}
+\title{calc_Rsqr_euc}
 \usage{
 calc_Rsqr_euc(Y, Yhat, pKarcher = NULL, maxiter = 200)
 }
 \arguments{
-\item{Y}{The observed spd matrices (an nxnxN array of N spd matrices)}
+\item{Y}{The observed matrices (an nxnxN array of N matrices)}
 
-\item{Yhat}{The estimated spd matrices (an nxnxN array of N spd matrices)}
+\item{Yhat}{The estimated matrices (an nxnxN array of N matrices)}
 
-\item{pKarcher}{The karcher mean of the observed spd matrices, or NULL if the karcher mean is to be calculated}
+\item{pKarcher}{The Karcher mean of the observed spd matrices, or NULL if the Karcher mean is to be calculated.}
 
-\item{maxiter}{If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the karcher mean.}
+\item{maxiter}{If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the Karcher mean.}
 }
 \description{
-Calculate R Squared
+Calculate R Squared in euclidean space.
 }

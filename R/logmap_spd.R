@@ -29,6 +29,10 @@
 # %v = rtX*logm(invrtX*Y*invrtX)*rtX;
 # % v = (v+v')/2;
 
+#' @title logmap_spd
+#' @description Logarithmic Map takes X from the SPD manifold and maps it to the tangent space of symmetric matrices at the point P on the SPD manifold. Analagous to X-P in euclidean space.
+#' @param P P is a point on the SPD manifold (a positive definite symmetric matrix).
+#' @param X X is an SPD matrix to be mapped to the tangent space at P.
 #' @export
 logmap_spd <- function(P,X) {
 #LOGMAP_SPD maps X on SPD manifold to the tangent space at P.

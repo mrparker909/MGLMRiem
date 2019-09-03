@@ -1,16 +1,16 @@
 # This is the algorithm from the conference paper:
 # Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352
-# Credit goes to the paper authors, blame for errors in code goes to Matthew RP Parker 2019
+# Credit goes to the paper authors, blame for errors in the code and any additions goes to Matthew RP Parker 2019
 
 #' @title mglm_spd
-#' @description This is the MGLM algorithm for performing Riemann Regression on SPD manifolds, developed by: Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352. This algorithm was adapted to R from the publicly available matlab code by Matthew RP Parker; blame for errors in the transcription go to Matthew RP Parker 2019.
+#' @description This is the MGLM algorithm for performing Riemann Regression on SPD manifolds, developed by: Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352. This algorithm was adapted to R from the publicly available matlab code by Matthew RP Parker; blame for errors in the transcription go to Matthew RP Parker 2019. Any issues arising from additions and modifications to the code are also the fault of Matthew RP Parker.
 #' @param X       X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.
 #' @param Y       Y is a p by p by N array of p by p symmetric positive definite response matrices.
 #' @param maxiter maxiter is the maximum number of iterations before the optimization algorithm stops searching for an optimum. If the algorithm stops before reaching maxiters, then the "converged" variable will be set to TRUE, otherwise it will be set to FALSE.
 #' @param pKarcher if TRUE, the estimated base point p will start at the Karcher mean of the observed SPD matrices Y, otherwise the starting point will be the identity matrix.
-#' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running MGLM algorithm.
+#' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running where the MGLM algorithm left off.
 #' @param checkpointPath path to write checkpoint.rda file (if enableCheckpoint=TRUE).
-#' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached).
+#' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
 #' @export
 mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpointPath="./") {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
@@ -40,7 +40,7 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
 # X is nxN (n observations as rows, N covariates as columns)
   
   if(enableCheckpoint) {
-    print(paste0("writing checkpoint file to ", getwd(),checkpointPath,"checkpoint.rda"))
+    print(paste0("CHECKPOINT ENABLED: setting checkpoint file to ", getwd(),checkpointPath,"checkpoint.rda"))
   }
   
 # ndimX = N = number of covariates

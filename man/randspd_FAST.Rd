@@ -9,7 +9,7 @@ randspd_FAST(n, maxDist = 3, showDist = F, NUM = 1, minDist = 0)
 \arguments{
 \item{n}{dimensions of nxn SPD matrix}
 
-\item{maxDist}{maximum scale of random component P of SPD matrix (projected from I_nxn with expmap(I,m*P), where m in runif(0,maxDist)).}
+\item{maxDist}{maximum scale of random component P of SPD matrix (projected from I_nxn with expmap(I,m*P), where m in runif(minDist, maxDist)).}
 
 \item{showDist}{if T, will print the distance of random SPD maxtrix from I_nxn}
 

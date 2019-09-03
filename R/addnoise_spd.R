@@ -37,9 +37,10 @@ addrelnoise_spd <- function(A, maxerr) {
   return(Anew)
 }
 
-#' add noise relative to A where SNR is the signal (A) to noise ratio,
-#' num_cov allows scaling the SNR by the number of covariates, 
-#' taper=T reduces the noise exponentially as distance from the diagonal increases (1/2^d)
+#' @title addSNR_spd
+#' @description Adds random noise to an SPD matrix, given a signal to noise ratio.
+#' @param num_cov num_cov allows scaling the SNR by the number of covariates (Effective SNR = SNR*num_cov).  
+#' @param taper if taper=T, reduces the noise exponentially as distance from the diagonal increases (1/2^d).
 #' @export
 addSNR_spd <- function(A, SNR, num_cov=1,taper=F) {
   SNR = SNR * num_cov

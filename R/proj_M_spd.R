@@ -44,6 +44,10 @@
 #   end
 #   end
 
+#' @title proj_M_spd
+#' @description Projects a matrix X on to the SPD manifold.
+#' @param X A matrix to transform into an SPD matrix.
+#' @param c c is the eigenvalues threshold (if any eigenvalue is less than c, then the matrix is not SPD, since an SPD matrix has all non-zero eigenvalues).
 #' @export
 proj_M_spd <- function(X,c=.Machine$double.eps) {
 # PROJ_M_SPD projects a matrix onto SPD manifolds.

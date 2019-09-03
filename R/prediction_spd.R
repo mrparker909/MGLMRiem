@@ -23,6 +23,11 @@
 #   end
 #   
 
+#' @title prediction_spd
+#' @description Given a base point p, a set of tangent vectors V, and covariates X, calculates Y. Used to transform model estimates p_hat, V_hat, X_hat into model predictions Y_hat.
+#' @param p p is a base point (SPD maxtrix).
+#' @param V V is a set of tangent vectors (dxdxdim(X) symmetric matrices).
+#' @param X X is a set of covariates, dimX x N column vectors.
 #' @export
 prediction_spd <- function(p,V,X) {
 #PREDICTION_SPD predicts phat based on estimate p, V and covariate X.

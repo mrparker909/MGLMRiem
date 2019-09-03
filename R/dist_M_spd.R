@@ -12,6 +12,10 @@
 # d = sqrt(innerprod_TpM_spd(V,V,X));
 # end
 
+#' @title dis_M_spd
+#' @description Calculates the distance on the SPD manifold between two SPD matrices X and Y. \eqn{<Log(X,Y)|Log(X,Y)>_{X}^{0.5}}
+#' @param X an SPD matrix
+#' @param Y an SPD matrix
 #' @export
 dist_M_spd <- function(X,Y) {
 #DIST_M_SPD returns distance between X and Y on SPD manifold.
@@ -33,6 +37,10 @@ dist_M_spd <- function(X,Y) {
   return(d)
 }
 
+#' @title dis_M_euc
+#' @description Calculates the distance in euclidean space between two matrices X and Y. \eqn{d = trace(X'Y)^{0.5}}
+#' @param X a matrix
+#' @param Y a matrix
 #' @export
 dist_M_euc <- function(X,Y) {
   #DIST_M_EUC returns distance between X and Y in Euclidean space.

@@ -11,6 +11,10 @@
 #   r = sqrt(innerprod_TpM_spd(v,v,p));
 # end
 
+#' @title norm_TpM_spd
+#' @description Calculates the norm of the symmetric matrix v on the SPD manifold at the point p.
+#' @param p p is a point on the SPD manifold.
+#' @param v v is a tangent vector for which to calculate the norm on the SPD manifold.
 #' @export
 norm_TpM_spd <- function(p,v) {
 # NORM_TPM_SPD calculates the norm of tangent vector v in TpM on SPD manifolds.

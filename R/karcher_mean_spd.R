@@ -40,6 +40,11 @@
 # end
 # end
 
+#' @title karcher_mean_spd
+#' @description Calculates the Karcher mean with weights W on the SPD manifold.
+#' @param X X is a dxdxN array of dxd SPD matrices, for which to calculate the Karcher mean.
+#' @param W W is a vector of N weights to apply to the SPD matrices (if W == NULL then equal weights are applied).
+#' @param niter niter is the maximum number of iterations in calculating the Karcher mean.
 #' @export
 karcher_mean_spd <- function(X, W=NULL, niter) {
 #KARCHER_MEAN_SPD calculates the intrinsic mean with weight W on SPD manifolds.

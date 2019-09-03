@@ -1,7 +1,8 @@
-#' @title Frechet Variance
-#' @param Y dxdxn array of dxd spd matrices to find the frechet variance of
-#' @param pKarcher if not NULL, the karcher mean from which to center the variance. If NULL, the karcher mean will be calculated.
-#' @param maxiter if pKarcher is NULL, maxiter is the maximum number of iterations for calculating the karcher mean.
+#' @title frechet_variance_spd
+#' @description Calculates the Frechet Variance for a set of SPD matrices.
+#' @param Y dxdxn array of dxd SPD matrices for which to find the Frechet Variance.
+#' @param pKarcher The Karcher mean from which to center the variance. If NULL, the Karcher mean will be calculated.
+#' @param maxiter if pKarcher is NULL, maxiter is the maximum number of iterations for calculating the Karcher mean.
 #' @export
 frechet_variance_spd <- function(Y, pKarcher=NULL, maxiter=200) {
   if(is.null(pKarcher)) {
@@ -14,11 +15,12 @@ frechet_variance_spd <- function(Y, pKarcher=NULL, maxiter=200) {
   return(fVar/sizeR(Y,3))
 }
 
-#' @title Calculate R Squared
-#' @param Y        The observed spd matrices (an nxnxN array of N spd matrices)
-#' @param Yhat     The estimated spd matrices (an nxnxN array of N spd matrices)
-#' @param pKarcher The karcher mean of the observed spd matrices, or NULL if the karcher mean is to be calculated
-#' @param maxiter  If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the karcher mean.
+#' @title calc_Rsqr_spd
+#' @description Calculates R Squared on the SPD manifold.
+#' @param Y        The observed SPD matrices (an nxnxN array of N SPD matrices)
+#' @param Yhat     The estimated SPD matrices (an nxnxN array of N SPD matrices)
+#' @param pKarcher The Karcher mean of the observed SPD matrices, or NULL if the Karcher mean is to be calculated
+#' @param maxiter  If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the Karcher mean.
 #' @export
 calc_Rsqr_spd <- function(Y, Yhat, pKarcher=NULL, maxiter=200) {
   if(is.null(pKarcher)) {
@@ -28,11 +30,12 @@ calc_Rsqr_spd <- function(Y, Yhat, pKarcher=NULL, maxiter=200) {
 }
 
 
-#' @title Calculate R Squared
-#' @param Y        The observed spd matrices (an nxnxN array of N spd matrices)
-#' @param Yhat     The estimated spd matrices (an nxnxN array of N spd matrices)
-#' @param pKarcher The karcher mean of the observed spd matrices, or NULL if the karcher mean is to be calculated
-#' @param maxiter  If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the karcher mean.
+#' @title calc_Rsqr_euc
+#' @description Calculate R Squared in euclidean space.
+#' @param Y        The observed matrices (an nxnxN array of N matrices)
+#' @param Yhat     The estimated matrices (an nxnxN array of N matrices)
+#' @param pKarcher The Karcher mean of the observed spd matrices, or NULL if the Karcher mean is to be calculated.
+#' @param maxiter  If pKarcher is NULL, maxiter is the maximum number of iterations for calculating the Karcher mean.
 #' @export
 calc_Rsqr_euc <- function(Y, Yhat, pKarcher=NULL, maxiter=200) {
   if(is.null(pKarcher)) {

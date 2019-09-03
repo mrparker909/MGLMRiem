@@ -154,6 +154,11 @@ parallel <- function(p,q,w) {
   return(w_new)
 }
 
+#' @title paralleltranslateAtoB_spd
+#' @description Performs a parallel transport of the symmetrix matrices w, from point a to point b on the SPD manifold.
+#' @param a The starting point on the SPD manifold (a symmetric positive definite matrix).
+#' @param b The ending point on the SPD manifold (a symmetric positive definite matrix).
+#' @param w The set of tangent vectors (symmetrix matrices) which should be moved via parallel transport from a to b.
 #' @export
 paralleltranslateAtoB_spd <- function(a, b, w) {
 # PARALLELTRANSLATEATOB_SPD transports a set of tangent vectors w from TaM to TbM.

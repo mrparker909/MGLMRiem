@@ -1,5 +1,7 @@
 
-
+#' @title isspd_mxstack
+#' @description Checks an array of matrices to ensure each matrix is symmetric positive definite.
+#' @param Y A dxdxN array of N matrices to check.
 #' @export
 isspd_mxstack <- function(Y) {
   t = 0
