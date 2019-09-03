@@ -8,13 +8,8 @@ SST_spd <- function(Y, Ybar=NULL, niter=200) {
   if(is.null(Ybar)) {
     Ybar = karcher_mean_spd(Y, niter=niter)
   }
-  
-  Y_SS = numeric(sizeR(Y,3))
-  for(i in 1:sizeR(Y,3)) {
-    Y_SS[i] = norm_TpM_spd(Ybar, logmap_spd(Ybar,Y[,,i]))
-  }
-  
-  return(sum(Y_SS^2))
+  SST = gsqerr_spd(repmat(Ybar,sizeR(Y,3)), Y)
+  return(SST)
 }
 
 
@@ -24,12 +19,8 @@ SST_spd <- function(Y, Ybar=NULL, niter=200) {
 #' @param Ybar  Ybar is the Karcher mean of the SPD matrices Y.
 #' @export
 SSR_spd <- function(Yhat, Ybar) {
-  Y_SS = numeric(sizeR(Yhat,3))
-  for(i in 1:sizeR(Yhat,3)) {
-    Y_SS[i] = norm_TpM_spd(Ybar, logmap_spd(Ybar,Yhat[,,i]))
-  }
-  
-  return(sum(Y_SS^2))
+  SSR = gsqerr_spd(repmat(Ybar,sizeR(Yhat,3)), Yhat)
+  return(SSR)
 }
 
 
@@ -39,10 +30,6 @@ SSR_spd <- function(Yhat, Ybar) {
 #' @param Yhat  dxdxN array of estimated dxd SPD matrices.
 #' @export
 SSE_spd <- function(Y, Yhat) {
-  Y_SS = numeric(sizeR(Yhat,3))
-  for(i in 1:sizeR(Yhat,3)) {
-    Y_SS[i] = norm_TpM_spd(Y[,,i], logmap_spd(Y[,,i],Yhat[,,i]))
-  }
-  
-  return(sum(Y_SS^2))
+  SSE = gsqerr_spd(Y, Yhat)
+  return(SSE)
 }
