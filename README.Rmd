@@ -1,7 +1,3 @@
----
-output: github_document
----
-
 # MGLM_Riem
 
 ```{r echo=F, eval=F}
