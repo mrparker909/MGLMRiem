@@ -90,7 +90,7 @@ An alternative, more conservative approach, would be to consider SSM as unexplai
 
 ## Checkpointing
 
-It can be difficult to estimate the number of iterations necessary for the model to converge, and it is very wasteful in terms of computing time to run an algorithm for say 1000 iterations, only to find that 1000 was not enough, then to repeat for larget and larger iterations until finding an appropriate number. It can also be infeasible to run an algorithm long enough in one sitting (for example if a system needs to be rebooted intermittently). Whatever the reason, if you need to be able to stop the algorithm, and restart it from where you left off, you can enable checkpointing very easily:
+It can be difficult to estimate the number of iterations necessary for the model to converge, and it is very wasteful in terms of computing time to run an algorithm for say 1000 iterations, only to find that 1000 was not enough, then to repeat for larger and larger iterations until finding an appropriate number. It can also be infeasible to run an algorithm long enough in one sitting (for example if a system needs to be rebooted intermittently). Whatever the reason, if you need to be able to stop the algorithm, and restart it from where you left off, you can enable checkpointing very easily:
 
 ```{r}
 # Here we reduce the number of iterations to 100, which is not
