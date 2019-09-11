@@ -65,7 +65,9 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
   c2 = 1
   
   #E <- c(E,feval_spd(p,V,X,Y))#E = [E; feval_spd(p,V,X,Y)];
-  E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  if(length(E) <= length(gnorm)) {
+    E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  }
   
   step = c1
   for(niter in iter:maxiter) {
@@ -153,7 +155,8 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
       if(E[1] > E_new) {
         p = p_new
         V = proj_TpM_spd(V_new)
-        E = c(E, E_new)
+        #E = c(E, E_new)
+        E <- LimitedMemoryList::LMc(new_el = E_new, old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
         
         if(!is.double(gnorm_new)) {
           stop('Numerical error, gnorm_new is not a double (mglm_spd.R)')
@@ -187,8 +190,9 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
   }
   
   #E = c(E, feval_spd(p,V,X,Y))
-  E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
-  
+  if(length(E) <= length(gnorm)) {
+    E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  }
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]

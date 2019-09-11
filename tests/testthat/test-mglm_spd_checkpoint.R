@@ -21,7 +21,7 @@ test_that("checkpointing works", {
   file.remove("checkpoint.rda")
   
   # run from checkpoint file
-  res2=mglm_spd_checkpoint(checkpoint, maxiter = 10, enableCheckpoint=T)
+  res2=mglm_spd_checkpoint(checkpoint, maxiter = 100, enableCheckpoint=F)
   expect_equal(T, res2$converged)
   
   

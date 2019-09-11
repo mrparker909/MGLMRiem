@@ -197,7 +197,9 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
   }
 
   #E = c(E, feval_spd(p,V,X,Y))
-  E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  if(length(E) <= length(gnorm)) {
+    E <- LimitedMemoryList::LMc(new_el = feval_spd(p,V,X,Y), old_list = E, M = ifelse(Memory==0, 1+length(E),Memory))
+  }
   
   Y_hat = prediction_spd(p,V,X)
   
