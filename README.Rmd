@@ -7,6 +7,8 @@ knitr::knit(input="README.rmd", output = "README.md")
  
 Implementing in R (as well as augmenting and modifying) the algorithms of Kim et al. 2014 for regressing multiple symmetric positive definite matrices against real valued covariates. The original code from which this repo is based was written in Matlab, and is available from NITRC: [mglm_riem](https://www.nitrc.org/projects/riem_mglm). As well, the surrounding works are hosted on the University of Wisconsin website: [Hyunwoo J. Kim (2014)](http://pages.cs.wisc.edu/~hwkim/projects/riem-mglm/).
 
+This R package is intended to simplify the application of regression for response variables living on the manifold of symmetric positive definite matrices, with real valued covariates.
+
 # How to Install
 
 You will need to install from github:
@@ -124,6 +126,7 @@ mod3$converged
 ```
 
 # Disclaimer
+
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
 
 

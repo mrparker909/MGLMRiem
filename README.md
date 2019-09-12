@@ -4,6 +4,8 @@
  
 Implementing in R (as well as augmenting and modifying) the algorithms of Kim et al. 2014 for regressing multiple symmetric positive definite matrices against real valued covariates. The original code from which this repo is based was written in Matlab, and is available from NITRC: [mglm_riem](https://www.nitrc.org/projects/riem_mglm). As well, the surrounding works are hosted on the University of Wisconsin website: [Hyunwoo J. Kim (2014)](http://pages.cs.wisc.edu/~hwkim/projects/riem-mglm/).
 
+This R package is intended to simplify the application of regression for response variables living on the manifold of symmetric positive definite matrices, with real valued covariates.
+
 # How to Install
 
 You will need to install from github:
@@ -101,7 +103,7 @@ An alternative, more conservative approach, would be to consider SSM as unexplai
 
 ## Checkpointing
 
-It can be difficult to estimate the number of iterations necessary for the model to converge, and it is very wasteful in terms of computing time to run an algorithm for say 1000 iterations, only to find that 1000 was not enough, then to repeat for larget and larger iterations until finding an appropriate number. It can also be infeasible to run an algorithm long enough in one sitting (for example if a system needs to be rebooted intermittently). Whatever the reason, if you need to be able to stop the algorithm, and restart it from where you left off, you can enable checkpointing very easily:
+It can be difficult to estimate the number of iterations necessary for the model to converge, and it is very wasteful in terms of computing time to run an algorithm for say 1000 iterations, only to find that 1000 was not enough, then to repeat for larger and larger iterations until finding an appropriate number. It can also be infeasible to run an algorithm long enough in one sitting (for example if a system needs to be rebooted intermittently). Whatever the reason, if you need to be able to stop the algorithm, and restart it from where you left off, you can enable checkpointing very easily:
 
 
 ```r
@@ -156,6 +158,7 @@ mod3$converged
 ```
 
 # Disclaimer
+
 This R package is under development, and bugs can be expected as well as sudden changes to function call formats, function return values, and general package structure. Use at your own risk. Feel free to contact me through github if you have any questions or concerns!
 
 
