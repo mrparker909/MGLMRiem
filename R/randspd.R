@@ -35,8 +35,9 @@ randspd <- function(n, c=3, udist=3) {
 #' @param minDist  minimum scale of random component of P of SPD matrix
 #' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
 #' @param NUM      the number of SPD matrices to return (if larger than 1, will return an nxnxNUM array of nxn spd matrices).
+#' @param corr     if T, will generate a correlation matrix.
 #' @export
-randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
+randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0, corr=F) {
   if(minDist==maxDist) {
     warning("minDist == maxDist, setting minDist = 0")
     minDist=0
@@ -63,7 +64,12 @@ randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
     }
     if(showDist) print(curDist)
     if(!isspd(P)) stop("ERROR, randsdp_FAST: GENERATED P IS NOT SPD")
-    Y[,,i] = P
+    if(corr) {
+      Y[,,i] = cov2cor(P)
+    } else {
+      Y[,,i] = P
+    }
+    # Y[,,i] = P #ifelse(corr, cov2cor(P), P)
   }
   if(NUM==1) { Y=Y[,,1] }
   return(Y)
