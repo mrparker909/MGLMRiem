@@ -20,7 +20,7 @@ mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
 
 \item{checkpointPath}{path to write checkpoint.rda file (if enableCheckpoint=TRUE).}
 
-\item{Memory}{Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimted' list length.}
+\item{Memory}{Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimited' list length.}
 }
 \value{
 returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
