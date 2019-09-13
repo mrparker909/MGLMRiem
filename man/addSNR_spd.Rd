@@ -4,14 +4,12 @@
 \alias{addSNR_spd}
 \title{addSNR_spd}
 \usage{
-addSNR_spd(A, SNR, num_cov = 1, taper = F, corr = F)
+addSNR_spd(A, SNR, num_cov = 1, taper = F)
 }
 \arguments{
 \item{num_cov}{num_cov allows scaling the SNR by the number of covariates (Effective SNR = SNR*num_cov).}
 
 \item{taper}{if taper=T, reduces the noise exponentially as distance from the diagonal increases (1/2^d).}
-
-\item{corr}{if corr=T, no noise is added to the diagonal elements, so only off diagonal elements are modiied.}
 }
 \description{
 Adds random noise to an SPD matrix, given a signal to noise ratio.
