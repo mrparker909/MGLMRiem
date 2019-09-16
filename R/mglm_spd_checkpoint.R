@@ -46,7 +46,7 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
   V=checkpoint$V
   E=checkpoint$E
   gnorm=checkpoint$gnorm
-  iter= checkpoint$niter
+  iter= checkpoint$niter+1
   maxiter = iter+maxiter
   
   ndimX = sizeR(X,1) #size(X,1);
