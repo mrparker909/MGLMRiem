@@ -64,7 +64,9 @@ karcher_mean_spd <- function(X, W=NULL, niter) {
 
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/17 $   
-  
+  if(!isspd_mxstack(X)) {
+    stop("ERROR: in karcher_mean_spd, X is not an array of SPD matrices")
+  }
   xbar = X[,,1]
   
   if(is.null(W)) {

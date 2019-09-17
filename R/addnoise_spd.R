@@ -74,6 +74,9 @@ addNoise_spd <- function(A, SNR=1) {
     Anew = proj_M_spd(expmap_spd(A,Vpt))
   }
   
-  if(!isspd(Anew)) warning("WARNING: random SPD is NOT SPD")
+  if(!isspd(Anew)) {
+    warning("WARNING: random SPD is NOT SPD")
+    Anew = proj_M_spd(Anew) 
+  }
   return(Anew)
 }
