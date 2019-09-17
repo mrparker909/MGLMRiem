@@ -52,8 +52,8 @@ addNoise_spd <- function(A, SNR=1) {
   
   In = diag(rep(1,times=sizeR(A,1)))
   
-  m = dist_M_spd(In, A) / SNR
-  d = rnorm(1,0,m)
+  m = log(dist_M_spd(In, A) / SNR)
+  d = rnorm(1,0,max(m,0))
   V1 = randsym(sizeR(A,1))
   V1 = V1 %*% t(V1)
   V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
@@ -64,8 +64,8 @@ addNoise_spd <- function(A, SNR=1) {
   attempts=1
   while(!isspd(Anew) & attempts < maximumAttempts) {
     attempts = attempts+1
-    m = dist_M_spd(In, A) / SNR
-    d = rnorm(1,0,m)
+    m = log(dist_M_spd(In, A) / SNR)
+    d = rnorm(1,0,max(m,0))
     V1 = randsym(sizeR(A,1))
     V1 = V1 %*% t(V1)
     V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
