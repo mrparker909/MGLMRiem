@@ -48,18 +48,31 @@ addSNR_spd <- function(A, SNR=1, num_cov=1,taper=F) {
 #' @param SNR Signal to Noise ratio to be used in generating the noise.
 #' @export
 addNoise_spd <- function(A, SNR=1) {
+  maximumAttempts = 1000
+  
   In = diag(rep(1,times=sizeR(A,1)))
   
   m = dist_M_spd(In, A) / SNR
   d = rnorm(1,0,m)
-  
-  V1 = randsym(sizeR(A,1)) 
+  V1 = randsym(sizeR(A,1))
   V1 = V1 %*% t(V1)
   V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
   V = expmap_spd(In,V2)
-  
   Vpt = paralleltranslateAtoB_spd(V, A, V2)
   Anew = proj_M_spd(expmap_spd(A,Vpt))
+  
+  attempts=1
+  while(!isspd(Anew) & attempts < maximumAttempts) {
+    attempts = attempts+1
+    m = dist_M_spd(In, A) / SNR
+    d = rnorm(1,0,m)
+    V1 = randsym(sizeR(A,1))
+    V1 = V1 %*% t(V1)
+    V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
+    V = expmap_spd(In,V2)
+    Vpt = paralleltranslateAtoB_spd(V, A, V2)
+    Anew = proj_M_spd(expmap_spd(A,Vpt))
+  }
   
   if(!isspd(Anew)) warning("WARNING: random SPD is NOT SPD")
   return(Anew)
