@@ -173,9 +173,9 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
     # stopping condition
     if(moved != 1) {
       break 
-    } else if(gnorm[1] < 1e-10) {
+    } else if(gnorm[1] < 1e-9) {
       break
-    } else if(abs(E[1] - E[2]) < 1e-16) {
+    } else if(abs(E[1] - E[2]) < 1e-9) {
       break
     } else {
       # Checkpoint

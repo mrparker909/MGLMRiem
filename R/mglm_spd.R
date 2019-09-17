@@ -180,9 +180,9 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
     # stopping condition
     if(moved != 1) {
       break 
-    } else if(gnorm[1] < 1e-10) {
+    } else if(gnorm[1] < 1e-9) {
       break
-    } else if(abs(E[1] - E[2]) < 1e-16) {
+    } else if(abs(E[1] - E[2]) < 1e-9) {
       break
     } else {
       # Checkpoint
