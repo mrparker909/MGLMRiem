@@ -5,9 +5,10 @@
 #' @param enableCheckpoint if TRUE, will create a checkpoint file at the end of each iteration. The checkpoint file may be loaded into R using load(checkpoint.rda), and then mglm_spd_checkpoint(checkpoint) can be run to continue running MGLM algorithm.
 #' @param checkpointPath path to write checkpoint.rda file (if enableCheckpoint=TRUE).
 #' @param Memory  Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimted' list length.
+#' @param tol      a list with two elements. The first element is the tolerance for changes in the objective function (convergence is reached if the change is less than the tolerance). The second element is the tolerance for the estimated slope (convergence occurs if the slope is less than tolerance). Note that when the change in objective function E is small, the algorithm is making very little improvement with each iteration, whereas if the slope is very small, then the estimated parameters are hardly changing. 
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
 #' @export
-mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, checkpointPath="./", Memory = 0) {
+mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, checkpointPath="./", Memory = 0, tol=list(1e-9,1e-9)) {
   # MGLM_SPD performs MGLM on SPD manifolds by interative method.
   #
   #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)
@@ -173,9 +174,9 @@ mglm_spd_checkpoint <- function(checkpoint, maxiter=500, enableCheckpoint=T, che
     # stopping condition
     if(moved != 1) {
       break 
-    } else if(gnorm[1] < 1e-9) {
+    } else if(gnorm[1] < tol[[2]]) {
       break
-    } else if(abs(E[1] - E[2]) < 1e-9) {
+    } else if(abs(E[1] - E[2]) < tol[[1]]) {
       break
     } else {
       # Checkpoint
