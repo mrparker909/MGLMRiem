@@ -50,7 +50,10 @@ expmap_spd <- function(P,X) {
 #   $Revision: 0.2 $  $Date: 2019/06/06 $ 
   if(!isspd(P)) {stop("P is not SPD, expmap_spd")}
   X <- drop(X)
-  if(!issym(X)) {stop("X is not symmetric, expmap_spd")}
+  if(!issym(X)) {
+    warning("X is not symmetric, expmap_spd, X is being projected on space of symmetric matrices")
+    X <- (X + t(X))/2  
+  }
   
   
   if(norm(X, "2") < 1e-18) return(P)
