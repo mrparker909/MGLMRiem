@@ -205,7 +205,7 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
   Y_hat = prediction_spd(p,V,X)
   
   #[p, V, E, Y_hat, gnorm]
-  return(list(p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm, converged=!(niter>=maxiter), MGLMsteps=niter))
+  return(list(X=X, Y=Y, p=p, V=V, E=E, Yhat=Y_hat, gnorm=gnorm, converged=!(niter>=maxiter), MGLMsteps=niter))
 }
 
 # NormVs
