@@ -67,8 +67,11 @@ logmap_pt2array_spd <- function(p,X) {
     U   <- EIG$vectors
     S   <- diag(EIG$values)
     
+    # deal with small eigenvalues
+    diagS = ifelse(diag(S) < 1e-10, 1e-10, diag(S))
+    
     H = g%*%U
-    V[,,i] = H%*%diag(log(diag(S)))%*%t(H)
+    V[,,i] = H%*%diag(log(diagS))%*%t(H)
   }
   return(V)
 }
