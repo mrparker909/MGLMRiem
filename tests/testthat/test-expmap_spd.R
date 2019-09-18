@@ -3,7 +3,7 @@ test_that("Exponential Map Works", {
   expect_equal(expmap_spd(P = diag(rep(1,3)), X = diag(rep(2,3))), diag(rep(exp(1)^2,3)))
   expect_equal(isspd(expmap_spd(P = diag(rep(1,3)), X = matrix(c(1,0,1,0,1,0,1,0,1), nrow=3))), T)
   
-  expect_warning(isspd(expmap_spd(P = diag(rep(1,3)), X = matrix(c(1,0,0,0,1,0,1,0,1), nrow=3))))
+  expect_error(isspd(expmap_spd(P = diag(rep(1,3)), X = matrix(c(1,0,0,0,1,0,1,0,1), nrow=3))))
   
   X <- matrix(c(1,1,1,1,1,1,1,1,1), nrow=3)
   X_err <- matrix(c(-7.097457, -5.700037, -5.419913,

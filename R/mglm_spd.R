@@ -14,7 +14,7 @@
 #' @param tol      a list with two elements. The first element is the tolerance for changes in the objective function (convergence is reached if the change is less than the tolerance). The second element is the tolerance for the estimated slope (convergence occurs if the slope is less than tolerance). Note that when the change in objective function E is small, the algorithm is making very little improvement with each iteration, whereas if the slope is very small, then the estimated parameters are hardly changing. 
 #' @return returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
 #' @export
-mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpointPath="./", Memory=0, tol=list(1e-9,1e-9)) {
+mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpointPath="./", Memory=0, tol=list(1e-16,1e-6)) {
 # MGLM_SPD performs MGLM on SPD manifolds by interative method.
 #
 #   [p, V, E, Y_hat, gnorm] = MGLM_SPD(X, Y)

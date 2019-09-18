@@ -5,7 +5,7 @@
 \title{mglm_spd}
 \usage{
 mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
-  checkpointPath = "./", Memory = 0, tol = list(1e-09, 1e-09))
+  checkpointPath = "./", Memory = 0, tol = list(1e-16, 1e-06))
 }
 \arguments{
 \item{X}{X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.}

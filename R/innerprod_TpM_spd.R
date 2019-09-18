@@ -41,9 +41,10 @@ innerprod_TpM_spd <- function(U,V,P) {
   #   MASS::ginv(P)
   # })
   
-  sqrtinvP = Isqrtm(P)$Binv
+  # sqrtinvP = Isqrtm(P)$Binv
+  invP = MASS::ginv(P)
+  #r = sum(diag(sqrtinvP%*%U%*%sqrtinvP%*%sqrtinvP%*%V%*%sqrtinvP))
+  r = sum(diag(invP%*%U%*%invP%*%V))
   
-  r = sum(diag(sqrtinvP%*%U%*%sqrtinvP%*%sqrtinvP%*%V%*%sqrtinvP))
-
   return(r)
 }
