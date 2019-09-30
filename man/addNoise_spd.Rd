@@ -9,7 +9,7 @@ addNoise_spd(A, SNR = 1, returnSNR = F)
 \arguments{
 \item{A}{An SPD matrix which will be noisified.}
 
-\item{SNR}{Signal to Noise ratio to be used in generating the noise.}
+\item{SNR}{Signal to Noise ratio to be used in generating the noise. SNR must be larger than 0.1.}
 
 \item{returnSNR}{If T, will return the signal to noise ratio of the original matrix A and the returned matrix}
 }
