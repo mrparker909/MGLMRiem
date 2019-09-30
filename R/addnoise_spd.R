@@ -66,8 +66,8 @@ addNoise_spd <- function(A, SNR=1, returnSNR=F) {
   
   Anew = expmap_spd(A,N)
   
-  cond = ifelse(SNRrnd <=1, 2*max(abs(unlist(A)))/SNRrnd, 2*max(abs(unlist(A)))*SNRrnd)
-  while(!isspd(Anew) | any(unlist(Anew) > cond )) {
+  cond = (2+SNR)*max(abs(unlist(A)))
+  while(!isspd(Anew) | any(abs(unlist(Anew)) > cond )) {
     N0 = randsym(sizeR(A,1)) # N0 symmetric
     N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
     N2 = (N1) * dA / (SNRrnd)
