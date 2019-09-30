@@ -43,40 +43,35 @@ addSNR_spd <- function(A, SNR=1, num_cov=1,taper=F) {
 
 
 #' @title addNoise_spd
-#' @description Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)).
+#' @description Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)), and SNR = Signal/Noise.
 #' @param A An SPD matrix which will be noisified.
 #' @param SNR Signal to Noise ratio to be used in generating the noise.
+#' @param returnSNR If T, will return the signal to noise ratio of the original matrix A and the returned matrix
 #' @export
-addNoise_spd <- function(A, SNR=1) {
-  maximumAttempts = 1000
-  
+addNoise_spd <- function(A, SNR=1, returnSNR=F) {
   In = diag(rep(1,times=sizeR(A,1)))
+  dA = dist_M_spd(In, A)
   
-  m = log(dist_M_spd(In, A) / SNR)
-  d = rnorm(1,0,max(m,0))
-  V1 = randsym(sizeR(A,1))
-  V1 = V1 %*% t(V1)
-  V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
-  V = expmap_spd(In,V2)
-  Vpt = paralleltranslateAtoB_spd(V, A, V2)
-  Anew = proj_M_spd(expmap_spd(A,Vpt))
-  
-  attempts=1
-  while(!isspd(Anew) & attempts < maximumAttempts) {
-    attempts = attempts+1
-    m = log(dist_M_spd(In, A) / SNR)
-    d = rnorm(1,0,max(m,0))
-    V1 = randsym(sizeR(A,1))
-    V1 = V1 %*% t(V1)
-    V2 = V1 / dist_M_spd(In,expmap_spd(In,V1)) * d
-    V = expmap_spd(In,V2)
-    Vpt = paralleltranslateAtoB_spd(V, A, V2)
-    Anew = proj_M_spd(expmap_spd(A,Vpt))
+  # randomize the signal to noise ratio with mean SNR, std dev sqrt(SNR/)/5
+  SNRrnd = 0
+  while(SNRrnd < 0.005) {
+    SNRrnd = SNR + (rnorm(1,0,sqrt(SNR)/5))
   }
   
-  if(!isspd(Anew)) {
-    warning("WARNING: random SPD is NOT SPD")
-    Anew = proj_M_spd(Anew) 
+  # random symmetric matrix for noise
+  N0 = randsym(sizeR(A,1)) # N0 symmetric
+  N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
+  N2 = (N1) * dA / (SNRrnd)
+  
+  N3 = N2
+  N = paralleltranslateAtoB_spd(In, A, N3)
+  
+  Anew = expmap_spd(A,N)
+  SNRobs=dist_M_spd(In,A) / dist_M_spd(A,Anew)
+  
+  if(returnSNR) {
+    return(list(A=Anew, SNR=SNRobs))
+  } else {
+    return(Anew)
   }
-  return(Anew)
 }

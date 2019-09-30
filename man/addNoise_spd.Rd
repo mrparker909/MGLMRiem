@@ -4,13 +4,15 @@
 \alias{addNoise_spd}
 \title{addNoise_spd}
 \usage{
-addNoise_spd(A, SNR = 1)
+addNoise_spd(A, SNR = 1, returnSNR = F)
 }
 \arguments{
 \item{A}{An SPD matrix which will be noisified.}
 
 \item{SNR}{Signal to Noise ratio to be used in generating the noise.}
+
+\item{returnSNR}{If T, will return the signal to noise ratio of the original matrix A and the returned matrix}
 }
 \description{
-Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)).
+Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)), and SNR = Signal/Noise.
 }
