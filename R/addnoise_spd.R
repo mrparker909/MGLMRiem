@@ -47,6 +47,21 @@ addSNR_spd <- function(A, SNR=1, num_cov=1,taper=F) {
 #' @param A An SPD matrix which will be noisified.
 #' @param SNR Signal to Noise ratio to be used in generating the noise. SNR must be larger than 0.1.
 #' @param returnSNR If T, will return the signal to noise ratio of the original matrix A and the returned matrix
+#' @examples 
+#' 
+#' 
+#' set.seed(623766)
+#' A = randspd_FAST(n=5)
+#' SNR=0.25
+#' snr=NULL
+#' for(i in 1:1000) {
+#'   snr=c(snr, addNoise_spd(A,SNR=SNR, T)$SNR)
+#' }
+#' hist(snr, breaks=30, freq=F, xlab = "SNR_obs", main="Histogram of SNR_obs")
+#' abline(v = SNR, col='blue', lw=3)
+#' abline(v = mean(snr), col='red', lw=2, lty=2)
+#' abline(v = median(snr), col='orange3', lw=2, lty=2)
+#' legend(x = 1.05*SNR, y=2, legend = c("SNR", "mean(SNR_obs)", "median(SNR_obs)"), col = c('blue','red','orange3'), lw=c(3,2,2), cex=0.65)
 #' @export
 addNoise_spd <- function(A, SNR=1, returnSNR=F) {
   In = diag(rep(1,times=sizeR(A,1)))
@@ -66,7 +81,7 @@ addNoise_spd <- function(A, SNR=1, returnSNR=F) {
   
   Anew = expmap_spd(A,N)
   
-  cond = (2+SNR)*max(abs(unlist(A)))
+  cond = (20+SNR)*max(abs(unlist(A)))
   while(!isspd(Anew) | any(abs(unlist(Anew)) > cond )) {
     N0 = randsym(sizeR(A,1)) # N0 symmetric
     N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
@@ -88,3 +103,4 @@ addNoise_spd <- function(A, SNR=1, returnSNR=F) {
     return(Anew)
   }
 }
+
