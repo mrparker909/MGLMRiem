@@ -52,7 +52,7 @@ addSNR_spd <- function(A, SNR=1, num_cov=1,taper=F) {
 #' 
 #' set.seed(623766)
 #' A = randspd_FAST(n=5)
-#' SNR=.75
+#' SNR=.15
 #' snr=NULL
 #' for(i in 1:1000) {
 #'   snr=c(snr, addNoise_spd(A,SNR=SNR, T)$SNR)
@@ -81,7 +81,7 @@ addNoise_spd <- function(A, SNR=1, returnSNR=F) {
   
   Anew = expmap_spd(A,N)
   
-  cond = (100+1/SNR)*max(abs(unlist(A)))
+  cond = (1+1/SNRrnd)*max(abs(unlist(A)))
   while(!isspd(Anew) | any(abs(unlist(Anew)) > cond )) {
     N0 = randsym(sizeR(A,1)) # N0 symmetric
     N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
