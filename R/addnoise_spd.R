@@ -57,7 +57,7 @@ addNoise_spd <- function(A, SNR=1) {
   In = diag(rep(1,times=d))
   dA = dist_M_spd(In, A)
   
-  Anew = doWhile(
+  Anew = doWhile::doWhile(
     do = {
       attempts = attempts+1
       N0 = randsym(sizeR(A,1)) # N0 symmetric
