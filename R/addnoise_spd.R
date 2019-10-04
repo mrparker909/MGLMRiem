@@ -45,62 +45,33 @@ addSNR_spd <- function(A, SNR=1, num_cov=1,taper=F) {
 #' @title addNoise_spd
 #' @description Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)), and SNR = Signal/Noise.
 #' @param A An SPD matrix which will be noisified.
-#' @param SNR Signal to Noise ratio to be used in generating the noise. SNR must be larger than 0.1.
-#' @param returnSNR If T, will return the signal to noise ratio of the original matrix A and the returned matrix
+#' @param SNR Signal to Noise ratio to be used in generating the noise. SNR must be larger 0.
 #' @examples 
-#' 
-#' 
 #' set.seed(623766)
 #' A = randspd_FAST(n=5)
-#' SNR=.15
-#' snr=NULL
-#' for(i in 1:1000) {
-#'   snr=c(snr, addNoise_spd(A,SNR=SNR, T)$SNR)
-#' }
-#' hist(snr, breaks=30, freq=F, xlab = "SNR_obs", main="Histogram of SNR_obs")
-#' abline(v = SNR, col='blue', lw=3)
-#' abline(v = mean(snr), col='red', lw=2, lty=2)
-#' abline(v = median(snr), col='orange3', lw=2, lty=2)
-#' legend(x = 1.05*SNR, y=2, legend = c("SNR", "mean(SNR_obs)", "median(SNR_obs)"), col = c('blue','red','orange3'), lw=c(3,2,2), cex=0.65)
+#' SNR=.25
+#' addNoise_spd(A,SNR=SNR)
 #' @export
-addNoise_spd <- function(A, SNR=1, returnSNR=F) {
-  In = diag(rep(1,times=sizeR(A,1)))
+addNoise_spd <- function(A, SNR=1) {
+  d = sizeR(A,1)
+  In = diag(rep(1,times=d))
   dA = dist_M_spd(In, A)
   
-  # randomize the signal to noise ratio with mean SNR
-  SNRrnd = SNR + (rnorm(1,0,(SNR)/10))
-  if(SNRrnd < 0.1) { SNRrnd = SNR }
-  
-  # random symmetric matrix for noise
-  N0 = randsym(sizeR(A,1)) # N0 symmetric
-  N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
-  N2 = (N1) * dA / (SNRrnd)
-  
-  N3 = N2
-  N = paralleltranslateAtoB_spd(In, A, N3)
-  
-  Anew = expmap_spd(A,N)
-  
-  cond = (1+1/SNRrnd)*max(abs(unlist(A)))
-  while(!isspd(Anew) | any(abs(unlist(Anew)) > cond )) {
-    N0 = randsym(sizeR(A,1)) # N0 symmetric
-    N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
-    N2 = (N1) * dA / (SNRrnd)
-    
-    N3 = N2
-    N = paralleltranslateAtoB_spd(In, A, N3)
-    
-    Anew = expmap_spd(A,N)
-  }
+  Anew = doWhile(
+    do = {
+      attempts = attempts+1
+      N0 = randsym(sizeR(A,1)) # N0 symmetric
+      N1 = N0 / dist_M_spd(In,expmap_spd(In,N0))
+      N2 = (N1) * dA / (SNR)
+      N  = paralleltranslateAtoB_spd(In, A, N2)
+      Anew = expmap_spd(A,N)
+    },
+    While = { (innerprod_TpM_spd(Anew,Anew,In) >
+                 d*innerprod_TpM_spd(A,A,In)/SNR) & attempts < 1000 },
+    Return = {Anew},
+    vars = list(A=A, SNR=SNR, d=d, In=In, dA=dA, attempts=0)
+  )
   
   if(!isspd(Anew)) { stop("ERROR: in addNoise_spd, new matrix is not SPD")}
-  
-  SNRobs=dist_M_spd(In,A) / dist_M_spd(A,Anew)
-  
-  if(returnSNR) {
-    return(list(A=Anew, SNR=SNRobs))
-  } else {
-    return(Anew)
-  }
+  return(Anew)
 }
-

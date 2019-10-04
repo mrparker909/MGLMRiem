@@ -4,31 +4,19 @@
 \alias{addNoise_spd}
 \title{addNoise_spd}
 \usage{
-addNoise_spd(A, SNR = 1, returnSNR = F)
+addNoise_spd(A, SNR = 1)
 }
 \arguments{
 \item{A}{An SPD matrix which will be noisified.}
 
-\item{SNR}{Signal to Noise ratio to be used in generating the noise. SNR must be larger than 0.1.}
-
-\item{returnSNR}{If T, will return the signal to noise ratio of the original matrix A and the returned matrix}
+\item{SNR}{Signal to Noise ratio to be used in generating the noise. SNR must be larger 0.}
 }
 \description{
 Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)), and SNR = Signal/Noise.
 }
 \examples{
-
-
 set.seed(623766)
 A = randspd_FAST(n=5)
-SNR=0.25
-snr=NULL
-for(i in 1:1000) {
-  snr=c(snr, addNoise_spd(A,SNR=SNR, T)$SNR)
-}
-hist(snr, breaks=30, freq=F, xlab = "SNR_obs", main="Histogram of SNR_obs")
-abline(v = SNR, col='blue', lw=3)
-abline(v = mean(snr), col='red', lw=2, lty=2)
-abline(v = median(snr), col='orange3', lw=2, lty=2)
-legend(x = 1.05*SNR, y=2, legend = c("SNR", "mean(SNR_obs)", "median(SNR_obs)"), col = c('blue','red','orange3'), lw=c(3,2,2), cex=0.65)
+SNR=.25
+addNoise_spd(A,SNR=SNR)
 }
