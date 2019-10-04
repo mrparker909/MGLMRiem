@@ -15,7 +15,7 @@ Imports:
     pracma,
     sparsebnUtils
 Remotes:
-    mrparker909/LimitedMemoryList
+    mrparker909/LimitedMemoryList,
     mrparker909/doWhile
 RoxygenNote: 6.1.1
 Suggests: 
