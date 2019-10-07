@@ -5,7 +5,7 @@
 \title{mglm_spd}
 \usage{
 mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
-  checkpointPath = "./", Memory = 0, tol = list(1e-16, 1e-06))
+  checkpointPath = "./", Memory = 0, tol = 1e-10)
 }
 \arguments{
 \item{X}{X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.}
@@ -22,7 +22,7 @@ mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
 
 \item{Memory}{Memory is the maximum length of the returned list. This can be useful when the number of iterations needed for convergence is very large. Memory==0 gives 'unlimited' list length.}
 
-\item{tol}{a list with two elements. The first element is the tolerance for changes in the objective function (convergence is reached if the change is less than the tolerance). The second element is the tolerance for the estimated slope (convergence occurs if the slope is less than tolerance). Note that when the change in objective function E is small, the algorithm is making very little improvement with each iteration, whereas if the slope is very small, then the estimated parameters are hardly changing.}
+\item{tol}{tolerance for threshold below which gradient is determined to be zero (stopping condition for algorithm).}
 }
 \value{
 returns a named list containing the following elements: p (the estimated base point on the manifold), V (the set of estimated covariate coefficient tangent vectors), E (the value of the objective function, which is the sum of squared geodesic error, at each iteration), Yhat (the fitted response values), gnorm (the norm of the gradient at each iteration), converged (a flag indicating whether the algorithm converged before maxiter was reached), MGLMsteps (number of iterations taken by the algorithm).
