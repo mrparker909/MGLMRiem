@@ -104,8 +104,10 @@ addNoise_spd2 <- function(A, SNR=1) {
       Anew = expmap_spd(A,N2)
     },
     While = {
+      !isspd(Anew) | (
       innerprod_TpM_spd(Anew,Anew,In) >
                  (innerprod_TpM_spd(A,A,In))*(d+1/SNR) & attempts < 100000 
+      )
       },
     Return = {Anew},
     vars = list(A=A, SNR=SNR, d=d, In=In, dA=dA, attempts=0)
