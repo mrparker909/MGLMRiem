@@ -8,7 +8,6 @@ randsym <- function(n) {
   return(M)
 }  
 
-
 #' @title addSNR_spd
 #' @description Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as matrix content (inner product on the SPD manifold).
 #' @param A An SPD matrix which will be noisified.
@@ -73,5 +72,45 @@ addNoise_spd <- function(A, SNR=1) {
   )
   
   if(!isspd(Anew)) { stop("ERROR: in addNoise_spd, new matrix is not SPD")}
+  return(Anew)
+}
+
+
+
+#' @title addNoise_spd2
+#' @description Adds random noise to an SPD matrix, given a signal to noise ratio. Signal and Noise are measured as distance on the SPD manifold. If A is the SPD matrix, N is the noise matrix, and I is the identity matrix, then Signal=dist(I,A), Noise=dist(A,N)), and SNR = Signal/Noise.
+#' @param A An SPD matrix which will be noisified.
+#' @param SNR Signal to Noise ratio to be used in generating the noise. SNR must be larger 0.
+#' @examples 
+#' set.seed(623766)
+#' A = randspd_FAST(n=5)
+#' SNR=.75
+#' addNoise_spd2(A,SNR=SNR)
+#' @export
+addNoise_spd2 <- function(A, SNR=1) {
+  d = sizeR(A,1)
+  In = diag(rep(1,times=d))
+  dA = dist_M_spd(In, A)
+  
+  Anew = doWhile::doWhile(
+    do = {
+      attempts = attempts+1
+      M = matrix(rnorm(d*d), ncol=d)
+      M = (M%*%t(M))
+      N0 = M
+      if(!isspd(N0)) {warning("N0 is not SPD in addNoise_spd2")}
+      N1 = N0 / dist_M_spd(In,N0)
+      N2 = (N1) * dA / (SNR)
+      Anew = expmap_spd(A,N2)
+    },
+    While = {
+      innerprod_TpM_spd(Anew,Anew,In) >
+                 (innerprod_TpM_spd(A,A,In))*(d+1/SNR) & attempts < 100000 
+      },
+    Return = {Anew},
+    vars = list(A=A, SNR=SNR, d=d, In=In, dA=dA, attempts=0)
+  )
+  
+  if(!isspd(Anew)) { stop("ERROR: in addNoise_spd2, new matrix is not SPD")}
   return(Anew)
 }
