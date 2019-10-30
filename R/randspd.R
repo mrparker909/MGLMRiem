@@ -54,8 +54,10 @@ randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
       # control distance from In
       curDist = dist_M_spd(P,In)
       while(curDist > maxDist ) {
-        L = logmap_spd(P,In)
-        P = expmap_spd(P,L/2)
+        # find the half way point between In and P
+        P = karcher_mean_spd(array( c( In , P ) , dim = c(n,n,2)), niter=100)
+        #L = logmap_spd(P,In)
+        #P = expmap_spd(P,L/2)
         
         curDist = dist_M_spd(P,In)
       }
