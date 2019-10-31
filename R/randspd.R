@@ -35,8 +35,9 @@ randspd <- function(n, c=3, udist=3) {
 #' @param minDist  minimum scale of random component of P of SPD matrix
 #' @param showDist if T, will print the distance of random SPD maxtrix from I_nxn
 #' @param NUM      the number of SPD matrices to return (if larger than 1, will return an nxnxNUM array of nxn spd matrices).
+#' @param maximumSPDValue maximum value of any entry of the SPD matrix (no limit if NULL)
 #' @export
-randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
+randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0, maximumSPDValue=NULL) {
   if(minDist==maxDist) {
     warning("minDist == maxDist, setting minDist = 0")
     minDist=0
@@ -50,6 +51,13 @@ randspd_FAST <- function(n, maxDist=3, showDist=F, NUM=1, minDist=0) {
       # random SPD
       aDist = runif(1,minDist,maxDist)
       P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
+      
+      if(!is.null(maximumSPDValue)) {
+        while(any(unlist(P) > maximumSPDValue)) {
+          aDist = runif(1,minDist,maxDist)
+          P = expmap_spd(In, sparsebnUtils::random.spd(n)*aDist)
+        }
+      }
       
       # control distance from In
       curDist = dist_M_spd(P,In)

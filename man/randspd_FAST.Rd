@@ -4,7 +4,8 @@
 \alias{randspd_FAST}
 \title{randspd_FAST}
 \usage{
-randspd_FAST(n, maxDist = 3, showDist = F, NUM = 1, minDist = 0)
+randspd_FAST(n, maxDist = 3, showDist = F, NUM = 1, minDist = 0,
+  maximumSPDValue = NULL)
 }
 \arguments{
 \item{n}{dimensions of nxn SPD matrix}
@@ -16,6 +17,8 @@ randspd_FAST(n, maxDist = 3, showDist = F, NUM = 1, minDist = 0)
 \item{NUM}{the number of SPD matrices to return (if larger than 1, will return an nxnxNUM array of nxn spd matrices).}
 
 \item{minDist}{minimum scale of random component of P of SPD matrix}
+
+\item{maximumSPDValue}{maximum value of any entry of the SPD matrix (no limit if NULL)}
 }
 \description{
 Generate a random Symmetric Positive Definite matrix of dimension n, such that the maximum distance on the manifold is less than maxDist. Makes use of the sparsebnUtils::random.spd function from the library sparsebnUtils.
