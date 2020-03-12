@@ -8,7 +8,7 @@ mglm_spd(X, Y, maxiter = 500, pKarcher = F, enableCheckpoint = F,
   checkpointPath = "./", Memory = 0, tol = 1e-10)
 }
 \arguments{
-\item{X}{X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.}
+\item{X}{X is a dimX by N matrix of column vectors, each row representing a covariate, each column representing an observation.}
 
 \item{Y}{Y is a p by p by N array of p by p symmetric positive definite response matrices.}
 

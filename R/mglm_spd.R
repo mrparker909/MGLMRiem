@@ -4,7 +4,7 @@
 
 #' @title mglm_spd
 #' @description This is the MGLM algorithm for performing Riemann Regression on SPD manifolds, developed by: Kim, H. J., Adluru, N., Collins, M. D., Chung, M. K., Bendin, B. B., Johnson, S. C., … Singh, V. (2014). Multivariate General Linear Models (MGLM) on Riemannian Manifolds with Applications to Statistical Analysis of Diffusion Weighted Images. 2014 IEEE Conference on Computer Vision and Pattern Recognition, 2705–2712. https://doi.org/10.1109/CVPR.2014.352. This algorithm was adapted from the publicly available matlab code to R by Matthew RP Parker; blame for errors in the transcription go to Matthew RP Parker 2019. Any issues arising from additions and modifications to the code are also the fault of Matthew RP Parker.
-#' @param X       X is a dimX by N matrix of column vectors, each row representing an observation, each column representing a covariate.
+#' @param X       X is a dimX by N matrix of column vectors, each row representing a covariate, each column representing an observation.
 #' @param Y       Y is a p by p by N array of p by p symmetric positive definite response matrices.
 #' @param maxiter maxiter is the maximum number of iterations before the optimization algorithm stops searching for an optimum. If the algorithm stops before reaching maxiters, then the "converged" variable will be set to TRUE, otherwise it will be set to FALSE.
 #' @param pKarcher if TRUE, the estimated base point p will start at the Karcher mean of the observed SPD matrices Y, otherwise the starting point will be the identity matrix.
@@ -39,10 +39,17 @@ mglm_spd <- function(X, Y, maxiter=500, pKarcher=F, enableCheckpoint=F, checkpoi
 #   Migrated to R by Matthew RP Parker
 #   $Revision: 0.2 $  $Date: 2019/06/06 $
 
-# X is nxN (n observations as rows, N covariates as columns)
+# X is nxN (n covariates as rows, N observations as columns)
   
   if(enableCheckpoint) {
     print(paste0("CHECKPOINT ENABLED: setting checkpoint file to ", getwd(),checkpointPath,"checkpoint.rda"))
+  }
+  
+  # if X is a vector of appropriate length, convert X to an array
+  if(is.null(dim(X))) {
+    if(length(X) == dim(Y)[3]) {
+      X = array(X, dim=c(1,length(X)))
+    }
   }
   
 # ndimX = N = number of covariates
