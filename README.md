@@ -97,9 +97,9 @@ And from those we can get at the proportions of explained and unexplained varian
 - Unexplained Variance = SSE/SST = 0.2202893
 - 'Manifold' Variance = SSM/SST = 1 - SSE/SST - SSR/SST = 0.001718
 
-Note that the 'Manifold' variance is error due to the manifold structure of the response, and the location of the residuals in the tangent space of the manifold (rather than on the manifold itself). Thus it could be considered as part of Explained Variance, and is implicitly included in the R squared calculation: R^2 = (SSR+SSM)/SST = 1-SSE/SST = 0.7797107. 
+Note that the 'Manifold' variance is error due to the manifold structure of the response, and it is implicitly included in the R squared calculation: R^2 = 1-SSE/SST = (SSR+SSM)/SST = 0.7797107. 
 
-An alternative, more conservative approach, would be to consider SSM as unexplained, in which case you could define a conservative R^2 as R^2 = SSR/SST = 0.7779927.
+An alternative, more reasonable approach, would be to consider SSM as unexplained variance, in which case you could define R^2 as R^2 = SSR/SST = 0.7779927. This alternate definition of R^2 is, in particular, more reliable when R^2 is very small.
 
 ## Checkpointing
 
